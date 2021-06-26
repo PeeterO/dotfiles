@@ -9,6 +9,8 @@ Plug 'hrsh7th/nvim-compe'
 
 Plug 'neovim/nvim-lspconfig'
 
+Plug 'ray-x/lsp_signature.nvim'
+
 Plug 'junegunn/fzf'
 
 Plug 'junegunn/fzf.vim'
@@ -116,6 +118,10 @@ require'lspconfig'.pyright.setup{}
 require'lspconfig'.clangd.setup{}
 EOF
 
+
+lua <<EOF
+require'lsp_signature'.on_attach()
+EOF
 
 "Auto pairs
 lua << EOF
