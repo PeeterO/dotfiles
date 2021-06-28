@@ -1,4 +1,6 @@
-" plugina
+"""""""""""""""""""""""""" plugin loading """"""""""""""""""""""""""
+
+
 call plug#begin('~/.config/nvim/plugins')
 
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
@@ -34,6 +36,8 @@ Plug 'makerj/vim-pdf'
 call plug#end()
 
 
+"""""""""""""""""""Plugin setups/confs"""""""""""""""""""""""""""""""""
+
 "Treesitter
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
@@ -63,6 +67,7 @@ EOF
 "set foldmethod=expr
 "set foldexpr=nvim_treesitter#foldexpr()
 
+
 "TS-rainbow
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
@@ -79,7 +84,7 @@ EOF
 command! -bang -nargs=* Rgf call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case -- ".shellescape(<q-args>), 1, fzf#vim#with_preview(), <bang>0)
 
 
-"Comppe conf
+"nvim-compe 
 set completeopt=menuone,noselect
 let g:compe = {}
 let g:compe.enabled = v:true
@@ -112,18 +117,21 @@ inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
 inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
 
 
-"LSP configuration
+"nvim-lspconfig
 lua << EOF
 require'lspconfig'.pyright.setup{}
 require'lspconfig'.clangd.setup{}
+require'lspconfig'.rls.setup{}
 EOF
 
 
+"lsp-signature
 lua <<EOF
 require'lsp_signature'.on_attach()
 EOF
 
-"Auto pairs
+
+"Auto-pairs
 lua << EOF
 require('nvim-autopairs').setup()
 EOF
@@ -141,10 +149,12 @@ require('lualine').setup()
 options = {theme = 'gruvbox'}
 EOF
 
+
 "nvim-comment
 lua <<EOF
 require('nvim_comment').setup()
 EOF
+
 
 "Snippets
 lua <<EOF
@@ -154,8 +164,15 @@ inoremap <c-k> <cmd>lua return require'snippets'.expand_or_advance(1)<CR>
 inoremap <c-j> <cmd>lua return require'snippets'.advance_snippet(-1)<CR>
 
 
-" mappings
+
+"""""""""""""""""""""Ergonomics confs"""""""""""""""""""""""""""
+
+" sets/lets
+set number
+set updatetime=300
 let mapleader = ","
+
+" mappings
 nnoremap <Leader>d  :Tags<CR>
 nnoremap <Leader>f  :BLines<CR>
 nnoremap <Leader>g  :Files<CR>
@@ -179,7 +196,3 @@ noremap <S-CR> <CR>
 noremap <C-up> :cp<CR>
 noremap <C-down> :cn<CR>
 noremap <Leader>cc :CommentToggle<CR>
-
-" sets/lets
-set number
-set updatetime=300
