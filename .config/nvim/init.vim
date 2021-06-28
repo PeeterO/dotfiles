@@ -158,8 +158,9 @@ EOF
 
 "Snippets
 lua <<EOF
-require('snippets').use_suggested_mappings(true)
+require('snippet_conf')
 EOF
+
 inoremap <c-k> <cmd>lua return require'snippets'.expand_or_advance(1)<CR>
 inoremap <c-j> <cmd>lua return require'snippets'.advance_snippet(-1)<CR>
 
