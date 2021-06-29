@@ -1,4 +1,32 @@
--- And now for some examples of snippets I actually use.
+function args_split(args)
+	local t=""
+	for arg in string.gmatch(args, '([^,]+)') do
+		arg_iter = arg:gmatch("%w+")
+		arg_type = arg_iter()
+		arg_name = arg_iter()
+		if arg_type ~= nil and arg_name ~= nil then
+			t = t .. arg_name .. " (" .. arg_type .. ")  -  TODO" .. string.char(10) .. "* "
+		end
+	end
+	return t
+end
+
+function create_list_of_strings(input)
+  local str = ''
+  local function wrap_quotes(x) return "'" .. x .. "'" end
+  for item, _ in input:gmatch('([%s%w%.%_]+),') do
+    local str_end = (' '):rep(vim.bo.shiftwidth) .. wrap_quotes(item)
+    if str == '' then
+      str = str .. str_end
+    else
+      str = str .. ',\n' .. str_end
+    end
+  end
+  return str
+
+end
+
+
 local snippets = require'snippets'
 local U = require'snippets.utils'
 snippets.snippets = {
@@ -34,12 +62,20 @@ snippets.snippets = {
  */
 ]];
 
-    date = [[${=os.date("%d.%m.%Y")}]];
+	date = [[${=os.date("%d.%m.%Y")}]];
+
+	slist = [[
+	local $1 = {
+	${2|create_list_of_strings(S.v)}
+}
+]]
+
+
 };
 
-  c = {
+c = {
 
-		main = [[#include <stdio.h>
+	  main = [[#include <stdio.h>
 
 
 
@@ -51,10 +87,34 @@ int main(void)
 }
 ]];
 
-		["for"] = U.match_indentation [[for( int $1 = 0; $1 < $2; $1++ )
+		["for"] = U.match_indentation [[for( int ${1:i} = 0; $1 < $2; $1++ )
 {
-
+	$0
 }]];
+
+func = [[
+
+/*
+* $2
+*
+* Author: Peeter Org; Created: ${=os.date("%d.%m.%Y")}
+*
+* Description:
+* TODO
+*
+* Param:
+* ${3|args_split(S.v)}
+* Return:
+* $1 - TODO
+*/
+
+
+$1 $2($3)
+{
+	$0
+}
+
+]]
 
 
 
