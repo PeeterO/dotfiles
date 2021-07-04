@@ -19,11 +19,11 @@ Plug 'junegunn/fzf.vim'
 
 Plug 'windwp/nvim-autopairs'
 
-Plug 'blackCauldron7/surround.nvim'
+Plug 'tpope/vim-surround'
 
 Plug 'hoob3rt/lualine.nvim'
 
-Plug 'terrortylor/nvim-comment'
+Plug 'preservim/nerdcommenter'
 
 Plug 'norcalli/snippets.nvim'
 
@@ -137,23 +137,12 @@ require('nvim-autopairs').setup()
 EOF
 
 
-"Surround
-lua <<EOF
-require"surround".setup{}
-EOF
-
-
 "Lualine
 lua <<EOF
 require('lualine').setup()
 options = {theme = 'gruvbox'}
 EOF
 
-
-"nvim-comment
-lua <<EOF
-require('nvim_comment').setup()
-EOF
 
 
 "Snippets
