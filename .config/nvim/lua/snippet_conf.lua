@@ -1,7 +1,13 @@
+function Split(s, delimiter)
+    return (s..delimiter):gmatch("(.-)"..delimiter)
+
+end
+
 function args_split(args)
 	local t=""
 	for arg in string.gmatch(args, '([^,]+)') do
-		arg_iter = arg:gmatch("%w+")
+		--arg_iter = Split(arg, ' ')
+		arg_iter = arg:gmatch("[%a%d_-]+")
 		arg_type = arg_iter()
 		arg_name = arg_iter()
 		if arg_type ~= nil and arg_name ~= nil then
@@ -68,14 +74,22 @@ snippets.snippets = {
 	local $1 = {
 	${2|create_list_of_strings(S.v)}
 }
-]]
+]];
 
+guard = [[ 
+#ifndef ${2|string.upper(S.v)}_H_
+#define ${2|string.upper(S.v)}_H_
+
+$0
+
+#endif
+]]
 
 };
 
 c = {
 
-	  main = [[#include <stdio.h>
+main = [[#include <stdio.h>
 
 
 
@@ -116,8 +130,11 @@ $1 $2($3)
 
 ]]
 
-
-
   };
+
+h = {
+
+
+}
 
 }
