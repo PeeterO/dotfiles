@@ -186,3 +186,5 @@ noremap <S-CR> <CR>
 noremap <C-up> :cp<CR>
 noremap <C-down> :cn<CR>
 noremap <Leader>cc :CommentToggle<CR>
+nnoremap <Leader>ma :set mouse=a<CR>
+nnoremap <Leader>mm :set mouse=""<CR>
