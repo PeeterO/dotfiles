@@ -7,7 +7,11 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend upda
 
 Plug 'p00f/nvim-ts-rainbow'
 
-Plug 'hrsh7th/nvim-compe'
+Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-nvim-lua'
+Plug 'hrsh7th/cmp-path'
 
 Plug 'neovim/nvim-lspconfig'
 
@@ -84,39 +88,6 @@ EOF
 command! -bang -nargs=* Rgf call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case -- ".shellescape(<q-args>), 1, fzf#vim#with_preview(), <bang>0)
 
 
-"nvim-compe 
-set completeopt=menuone,noselect
-let g:compe = {}
-let g:compe.enabled = v:true
-let g:compe.autocomplete = v:true
-let g:compe.debug = v:false
-let g:compe.min_length = 1
-let g:compe.preselect = 'enable'
-let g:compe.throttle_time = 80
-let g:compe.source_timeout = 200
-let g:compe.resolve_timeout = 800
-let g:compe.incomplete_delay = 400
-let g:compe.max_abbr_width = 100
-let g:compe.max_kind_width = 100
-let g:compe.max_menu_width = 100
-let g:compe.documentation = v:true
-
-let g:compe.source = {}
-let g:compe.source.path = v:true
-let g:compe.source.buffer = v:true
-let g:compe.source.calc = v:true
-let g:compe.source.nvim_lsp = v:true
-let g:compe.source.nvim_lua = v:true
-let g:compe.source.vsnip = v:true
-let g:compe.source.ultisnips = v:true
-
-inoremap <silent><expr> <C-Space> compe#complete()
-inoremap <silent><expr> <CR>      compe#confirm('<CR>')
-inoremap <silent><expr> <C-e>     compe#close('<C-e>')
-inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
-inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
-
-
 "nvim-lspconfig
 lua << EOF
 require'lspconfig'.pyright.setup{}
@@ -124,6 +95,28 @@ require'lspconfig'.clangd.setup{}
 require'lspconfig'.rls.setup{}
 EOF
 
+lua << EOF
+local cmp = require "cmp"
+cmp.setup(
+	{
+	sources = {
+		{name = "nvim_lsp"},
+		{name = "buffer"},
+		{name = "nvim_lua"},
+		{name = "path"}
+	},
+	mapping = {
+		["<Tab>"] = cmp.mapping(cmp.mapping.select_next_item(), {"i", "s"}),
+		["<CR>"] = cmp.mapping.confirm(
+		{
+		behavior = cmp.ConfirmBehavior.Replace,
+		select = true
+		}
+		)
+	}
+	}
+)
+EOF
 
 "lsp-signature
 lua <<EOF
