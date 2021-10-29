@@ -151,9 +151,13 @@ inoremap <c-j> <cmd>lua return require'snippets'.advance_snippet(-1)<CR>
 """""""""""""""""""""Ergonomics confs"""""""""""""""""""""""""""
 
 " sets/lets
+let mapleader = ","
 set number
 set updatetime=300
-let mapleader = ","
+set smartindent
+set noexpandtab
+set tabstop=4
+set shiftwidth=4
 
 " mappings
 nnoremap <Leader>d  :Tags<CR>
