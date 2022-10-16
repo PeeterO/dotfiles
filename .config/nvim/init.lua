@@ -60,12 +60,13 @@ require'lspconfig'.clangd.setup{}
 require'lspconfig'.rls.setup{}
 require'lsp_signature'.on_attach()
 require('nvim-autopairs').setup()
-require('lualine').setup()
-options = {theme = 'gruvbox'}
 require('snippet_conf')
 
 
 
+
+vim.o.background = "dark" -- or "light" for light mode
+vim.cmd([[colorscheme gruvbox]])
 
 vim.g.mapleader = ','
 vim.o.number = true
@@ -74,6 +75,7 @@ vim.o.updatetime = 300
 vim.o.expandtab = false
 vim.o.tabstop = 4
 vim.o.shiftwidth = 4
+vim.o.mouse =
 
 
 vim.api.nvim_set_keymap('n', '<Leader>d', "<cmd>lua require('fzf-lua').tags()<CR>", {noremap = true})
