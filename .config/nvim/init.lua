@@ -18,7 +18,7 @@ require'nvim-treesitter.configs'.setup {
 		},
 	},
 	indent = {
-		enable = true
+		enable = false
 	},
 	rainbow = {
 		enable = true,
@@ -37,13 +37,15 @@ cmp.setup(
 			{name = "path"}
 		},
 		mapping = {
-			["<Tab>"] = cmp.mapping(cmp.mapping.select_next_item(), {"i", "s"}),
+			['<C-e>'] = cmp.mapping.abort(),
+			["<C-n>"] = cmp.mapping(cmp.mapping.select_next_item(), {"i", "s"}),
+			["<C-p>"] = cmp.mapping(cmp.mapping.select_prev_item(), {"i", "s"}),
 			["<CR>"] = cmp.mapping.confirm(
 				{
 					behavior = cmp.ConfirmBehavior.Replace,
 					select = true
 				}
-			)
+			),
 		}
 	}
 )
