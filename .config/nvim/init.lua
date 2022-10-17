@@ -1,4 +1,4 @@
-require('packer-init')
+require'packer-init'
 
 require'nvim-treesitter.configs'.setup {
 	highlight = {
@@ -8,7 +8,6 @@ require'nvim-treesitter.configs'.setup {
 			-- ["foo.bar"] = "Identifier",
 		},
 	},
-
 	incremental_selection = {
 		enable = true,
 		keymaps = {
@@ -20,50 +19,42 @@ require'nvim-treesitter.configs'.setup {
 	},
 	indent = {
 		enable = true
-	}
-}
-
-
-require'nvim-treesitter.configs'.setup {
-  rainbow = {
-    enable = true,
-    --extended_mode = true, -- Highlight also non-parentheses delimiters, boolean or table: lang -> boolean
-    max_file_lines = 1000, -- Do not enable for files with more than 1000 lines, int
-  }
-}
-
-
-local cmp = require "cmp"
-cmp.setup(
-{
-	sources = {
-		{name = "nvim_lsp"},
-		{name = "buffer"},
-		{name = "nvim_lua"},
-		{name = "path"}
 	},
-	mapping = {
-		["<Tab>"] = cmp.mapping(cmp.mapping.select_next_item(), {"i", "s"}),
-		["<CR>"] = cmp.mapping.confirm(
-		{
-			behavior = cmp.ConfirmBehavior.Replace,
-			select = true
-		}
-		)
+	rainbow = {
+		enable = true,
+		extended_mode = true, -- Highlight also non-parentheses delimiters, boolean or table: lang -> boolean
+		max_file_lines = 1000, -- Do not enable for files with more than 1000 lines, int
 	}
 }
+
+local cmp = require'cmp'
+cmp.setup(
+	{
+		sources = {
+			{name = "nvim_lsp"},
+			{name = "buffer"},
+			{name = "nvim_lua"},
+			{name = "path"}
+		},
+		mapping = {
+			["<Tab>"] = cmp.mapping(cmp.mapping.select_next_item(), {"i", "s"}),
+			["<CR>"] = cmp.mapping.confirm(
+				{
+					behavior = cmp.ConfirmBehavior.Replace,
+					select = true
+				}
+			)
+		}
+	}
 )
 
 
 require'lspconfig'.pyright.setup{}
 require'lspconfig'.clangd.setup{}
 require'lspconfig'.rls.setup{}
-require'lsp_signature'.on_attach()
-require('nvim-autopairs').setup()
-require('snippet_conf')
-
-
-
+require'lsp_signature'.setup()
+require'nvim-autopairs'.setup()
+require'snippet_conf'
 
 vim.o.background = "dark" -- or "light" for light mode
 vim.cmd([[colorscheme gruvbox]])
