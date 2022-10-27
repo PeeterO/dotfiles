@@ -17,7 +17,15 @@ return require('packer').startup(function()
 
 	use 'neovim/nvim-lspconfig'
 
-	use 'ray-x/lsp_signature.nvim'
+	use {
+		'ray-x/lsp_signature.nvim',
+		config = function()
+			cfg = {
+				always_trigger = true
+			}
+			require'lsp_signature'.setup(cfg)
+		end
+	}
 
 	use 'ibhagwan/fzf-lua'
 
@@ -69,6 +77,44 @@ return require('packer').startup(function()
 		config = function()
 			require('neoclip').setup()
 		end,
+	}
+
+	use {
+		'nvim-tree/nvim-tree.lua',
+		requires = {
+			'kyazdani42/nvim-web-devicons', -- optional, for file icons
+		},
+		config = function()
+			vim.g.loaded_netrw = 1
+			vim.g.loaded_netrwPlugin = 1
+			require'nvim-tree'.setup({
+				view = {
+					mappings = {
+						list = {
+							{key = "u", action = "dir_up"}
+						}
+					}
+				}
+			})
+		end
+	}
+
+	use {
+		'sindrets/diffview.nvim',
+		requires = 'nvim-lua/plenary.nvim',
+		config = function()
+			local actions = require("diffview.actions")
+			require'diffview'.setup({
+				keymaps = {
+					file_history_panel = {
+						["q"] = ":tabclose<CR>",
+					},
+					view = {
+						["q"] = ":tabclose<CR>",
+					}
+				}
+			})
+		end
 	}
 
 end)
