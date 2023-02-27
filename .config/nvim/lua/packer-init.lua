@@ -197,4 +197,15 @@ return require('packer').startup(function()
 		end
 	}
 
+	use {
+
+		"folke/which-key.nvim",
+		config = function()
+			require('which-Key').setup({
+				-- Defaults, for now
+			})
+
+		end
+	}
+
 end)
