@@ -179,32 +179,14 @@ return require('packer').startup(function()
 		end
 	}
 
-	use {
-		'sindrets/diffview.nvim',
-		requires = 'nvim-lua/plenary.nvim',
-		config = function()
-			local actions = require("diffview.actions")
-			require'diffview'.setup({
-				keymaps = {
-					file_history_panel = {
-						["q"] = ":tabclose<CR>",
-					},
-					view = {
-						["q"] = ":tabclose<CR>",
-					}
-				}
-			})
-		end
-	}
+	-- Lua
 
 	use {
-
 		"folke/which-key.nvim",
 		config = function()
-			require('which-Key').setup({
-				-- Defaults, for now
-			})
-
+			require("which-key").setup {
+				 -- defaults, for now
+			}
 		end
 	}
 
