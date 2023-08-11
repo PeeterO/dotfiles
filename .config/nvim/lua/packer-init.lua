@@ -1,3 +1,5 @@
+require "nvim-tree-on-attach"
+
 return require('packer').startup(function()
 
 	use 'wbthomason/packer.nvim' --self-manage
@@ -168,13 +170,7 @@ return require('packer').startup(function()
 			vim.g.loaded_netrw = 1
 			vim.g.loaded_netrwPlugin = 1
 			require'nvim-tree'.setup({
-				view = {
-					mappings = {
-						list = {
-							{key = "u", action = "dir_up"}
-						}
-					}
-				}
+				on_attach = on_attach,
 			})
 		end
 	}
