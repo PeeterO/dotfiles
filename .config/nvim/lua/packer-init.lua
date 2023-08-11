@@ -186,6 +186,24 @@ return require('packer').startup(function()
 		end
 	}
 
-	use 'junegunn/vim-easy-align'
+	use {
+		'junegunn/vim-easy-align',
+		config = function()
+		
+		end
+	}
+	use {
+		'gennaro-tedesco/nvim-peekup',
+		config = function()
+			require('nvim-peekup.config').on_keystroke["delay"] = ''
+		end
+	}
+
+	use {
+		'gaborvecsei/memento.nvim',
+		requires = {
+			'nvim-lua/plenary.nvim'
+		},
+	}
 
 end)
