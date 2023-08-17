@@ -23,6 +23,9 @@ map('n', '<Leader>g',   "<cmd>lua require('fzf-lua').files()<CR>",              
 map('n', '<Leader>s',   "<cmd>lua require('fzf-lua').git_stash()<CR>",                { noremap = true, desc = "Fuzzy git stash"})
 map('n', '<Leader>r',   "<cmd>lua require('fzf-lua').grep()<CR>",                     { noremap = true, desc = "Fuzzy ripgrep"})
 map('v', '<Leader>r',   "<cmd>lua require('fzf-lua').grep_visual()<CR>",              { noremap = true, desc = "Fuzzy visual selection ripgrep"})
+map('n', '<Leader>x',   "<cmd>lua require('fzf-lua').commands()<CR>",                 { noremap = true, desc = "Fuzzy neovim commands"})
+map('n', '<Leader>z',   "<cmd>lua require('fzf-lua').builtin()<CR>",                  { noremap = true, desc = "Fuzzy commands"})
+
 map('n', '<Leader>y',   "<cmd>lua require('neoclip.fzf')()<CR>",                      { noremap = true, desc = "Fuzzy yank history"})
 map('n', '<Leader>t',   "<cmd>NvimTreeToggle<CR>",                                    { noremap = true, desc = "File tree toggle"})
 map('n', '<Leader>b',   '<cmd>w<CR> :make -r all<CR>',                                { noremap = true, desc = "Run make"})
