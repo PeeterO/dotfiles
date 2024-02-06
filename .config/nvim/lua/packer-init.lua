@@ -6,7 +6,7 @@ return require('packer').startup(function()
 
     use {
         'nvim-treesitter/nvim-treesitter',
-        requires = { 'p00f/nvim-ts-rainbow', opt = true},
+        requires = { 'p00f/nvim-ts-rainbow'},
         config = function()
             require'nvim-treesitter.configs'.setup {
                 highlight = {
@@ -39,15 +39,41 @@ return require('packer').startup(function()
 
     use {
         'hrsh7th/nvim-cmp',
+        requires = {
+            'hrsh7th/cmp-buffer',
+            'hrsh7th/cmp-nvim-lsp',
+            'hrsh7th/cmp-nvim-lua',
+            'hrsh7th/cmp-path',
+            'quangnguyen30192/cmp-nvim-tags',
+            'hrsh7th/cmp-calc',
+            'ray-x/cmp-treesitter',
+            'uga-rosa/cmp-dictionary',
+            'lukas-reineke/cmp-rg',
+            'saadparwaiz1/cmp_luasnip'
+        },
         config = function()
             local cmp = require'cmp'
-            cmp.setup(
-            {
+            cmp.setup({
                 sources = {
                     {name = "nvim_lsp"},
                     {name = "buffer"},
                     {name = "nvim_lua"},
-                    {name = "path"}
+                    {name = "path"},
+                    {name = "tags"},
+                    {name = "calc"},
+                    {name = "treesitter"},
+                    {
+                        name = "luasnip",
+                        option = {show_autosnippets = true}
+                    },
+                    {
+                        name = "dictionary",
+                        keyword_length = 2
+                    },
+                    {
+                        name = "rg",
+                        keyword_length = 4
+                    },
                 },
                 mapping = {
                     ['<C-e>'] = cmp.mapping.abort(),
@@ -57,21 +83,12 @@ return require('packer').startup(function()
                     {
                         behavior = cmp.ConfirmBehavior.Replace,
                         select = true
-                    }
-                    ),
+                    }),
                 }
-            }
-            )
+            })
         end
     }
 
-    use 'hrsh7th/cmp-buffer'
-    
-    use 'hrsh7th/cmp-nvim-lsp'
-
-    use 'hrsh7th/cmp-nvim-lua'
-
-    use 'hrsh7th/cmp-path'
 
     use {
         'neovim/nvim-lspconfig',
@@ -130,12 +147,20 @@ return require('packer').startup(function()
 
     use 'preservim/nerdcommenter'
 
-    use {
-        'norcalli/snippets.nvim',
+    use({
+        "L3MON4D3/LuaSnip",
+        requires = {"rafamadriz/friendly-snippets"},
+        -- follow latest release.
+        tag = "v2.2.0", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
+        -- install jsregexp (optional!:).
+        --run = "make install_jsregexp",
+        
         config = function()
-            require'snippet_conf'
+            require('luasnip').setup()
+
+            require("luasnip.loaders.from_vscode").lazy_load()
         end
-    }
+    })
 
     use 'jremmen/vim-ripgrep'
 

@@ -29,8 +29,6 @@ map('n', '<Leader>z',   "<cmd>lua require('fzf-lua').builtin()<CR>",            
 map('n', '<Leader>y',   "<cmd>lua require('neoclip.fzf')()<CR>",                      { noremap = true, desc = "Fuzzy yank history"})
 map('n', '<Leader>t',   "<cmd>NvimTreeToggle<CR>",                                    { noremap = true, desc = "File tree toggle"})
 map('n', '<Leader>b',   '<cmd>w<CR> :make -r all<CR>',                                { noremap = true, desc = "Run make"})
-map('i', '<c-k>',       "<cmd>lua return require'snippets'.expand_or_advance(1)<CR>", { noremap = true, desc = "Snippet continue"})
-map('i', '<c-j>',       "<cmd>lua return require'snippets'.advance_snippet(-1)<CR>",  { noremap = true, desc = "Snipper reverse"})
 map('n', '<Leader>h',   "<cmd>lua require('fzf-lua').git_bcommits()<CR><CR>",         { noremap = true, desc = "File history"})
 map('n', '<Leader>cc',  "<cmd>CommentToggle<CR>",                                     { noremap = true, desc = "Toggle comment"})
 map('n', '<Leader>~',   "<cmd>source $MYVIMRC<CR>",                                   { noremap = true, desc = "Reload vim conf"})
@@ -38,6 +36,23 @@ map('n', '<Leader>p',   "<cmd>set paste!<CR>",                                  
 map('n', 'ga',          "<Plug>(EasyAlign)",                                          { noremap = true, desc = "Align"})
 map('v', 'ga',          "<Plug>(EasyAlign)",                                          { noremap = true, desc = "Align"})
 map('n', 'gm',          "<cmd>lua require('memento').toggle()<CR>",                   { noremap = true, desc = "Previous files"})
+
+map('i', '<C-k>',         "<cmd>lua require('luasnip').expand()<CR>",                   {noremap = true, desc = "Snippet expand"})
+map('i', '<C-l>',         "<cmd>lua require('luasnip').jump(1)<CR>",                   {noremap = true, desc = "Snippet advance"})
+map('i', '<C-j>',         "<cmd>lua require('luasnip').jump(-1)<CR>",                   {noremap = true, desc = "Snippet back"})
+map('i', '<C-e>',         "<cmd>lua require('luasnip').jump(-1)<CR>",                   {noremap = true, desc = "Snippet back"})
+
+--vim.keymap.set({"i"}, "<C-K>", function() ls.expand() end, {silent = true})
+--vim.keymap.set({"i", "s"}, "<C-L>", function() ls.jump( 1) end, {silent = true})
+--vim.keymap.set({"i", "s"}, "<C-J>", function() ls.jump(-1) end, {silent = true})
+
+
+
+--vim.keymap.set({"i", "s"}, "<C-E>", function()
+    --if ls.choice_active() then
+        --ls.change_choice(1)
+    --end
+--end, {silent = true})
 
 map('n', '<Leader>as',  '<C-w>l',                                                     { noremap = true, desc = "Pane navigation"})
 map('n', '<Leader>sw',  '<C-w>k',                                                     { noremap = true, desc = "Pane navigation"})
