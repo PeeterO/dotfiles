@@ -1,12 +1,8 @@
-require "nvim-tree-on-attach"
 
-return require('packer').startup(function()
-
-    use 'wbthomason/packer.nvim' --self-manage
-
-    use {
+return {
+    {
         'nvim-treesitter/nvim-treesitter',
-        requires = { 'p00f/nvim-ts-rainbow'},
+        dependencies = { 'p00f/nvim-ts-rainbow'},
         config = function()
             require'nvim-treesitter.configs'.setup {
                 highlight = {
@@ -35,11 +31,12 @@ return require('packer').startup(function()
                 }
             }
         end
-    }
+    },
 
-    use {
+    {
         'hrsh7th/nvim-cmp',
-        requires = {
+        dependencies = {
+            'neovim/nvim-lspconfig',
             'hrsh7th/cmp-buffer',
             'hrsh7th/cmp-nvim-lsp',
             'hrsh7th/cmp-nvim-lua',
@@ -52,9 +49,15 @@ return require('packer').startup(function()
             'saadparwaiz1/cmp_luasnip'
         },
         config = function()
+            local capabilities = require('cmp_nvim_lsp').default_capabilities()
+            lsp = require'lspconfig'
+            lsp.pyright.setup{capabilities = capabilities,}
+            lsp.clangd.setup{capabilities = capabilities,}
+            lsp.rls.setup{capabilities = capabilities,}
+
             local cmp = require'cmp'
             cmp.setup({
-                sources = {
+                sources = cmp.config.sources({
                     {name = "nvim_lsp"},
                     {name = "buffer"},
                     {name = "nvim_lua"},
@@ -68,13 +71,13 @@ return require('packer').startup(function()
                     },
                     {
                         name = "dictionary",
-                        keyword_length = 2
+                        keyword_length = 4
                     },
                     {
                         name = "rg",
                         keyword_length = 4
                     },
-                },
+                }),
                 mapping = {
                     ['<C-e>'] = cmp.mapping.abort(),
                     ["<C-n>"] = cmp.mapping(cmp.mapping.select_next_item(), {"i", "s"}),
@@ -86,21 +89,11 @@ return require('packer').startup(function()
                     }),
                 }
             })
+
         end
-    }
+    },
 
-
-    use {
-        'neovim/nvim-lspconfig',
-        config = function()
-            conf = require'lspconfig'
-            conf.pyright.setup{}
-            conf.clangd.setup{}
-            conf.rls.setup{}
-        end
-    }
-
-    use {
+    {
         'ray-x/lsp_signature.nvim',
         config = function()
             cfg = {
@@ -108,20 +101,20 @@ return require('packer').startup(function()
             }
             require'lsp_signature'.setup(cfg)
         end
-    }
+    },
 
-    use 'ibhagwan/fzf-lua'
+    {'ibhagwan/fzf-lua'},
 
-    use {
+    {
         'windwp/nvim-autopairs',
         config = function()
             require'nvim-autopairs'.setup()
         end
-    }
+    },
 
-    use 'tpope/vim-surround'
+    {'tpope/vim-surround'},
 
-    use {
+    {
         'kyazdani42/nvim-web-devicons',
         config = function()
             require'nvim-web-devicons'.setup {
@@ -129,11 +122,11 @@ return require('packer').startup(function()
                 default = true;
             }
         end,
-    }
+    },
 
-    use {
+    {
         'nvim-lualine/lualine.nvim',
-        requires = { 'kyazdani42/nvim-web-devicons', opt = true },
+        dependencies = { 'kyazdani42/nvim-web-devicons', opt = true },
         config = function()
             require('lualine').setup {
                 options = {
@@ -143,13 +136,13 @@ return require('packer').startup(function()
                 globalstatus = true
             }
         end,
-    }
+    },
 
-    use 'preservim/nerdcommenter'
+    {'preservim/nerdcommenter'},
 
-    use({
+    {
         "L3MON4D3/LuaSnip",
-        requires = {"rafamadriz/friendly-snippets"},
+        dependencies = {"rafamadriz/friendly-snippets"},
         -- follow latest release.
         tag = "v2.2.0", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
         -- install jsregexp (optional!:).
@@ -160,35 +153,35 @@ return require('packer').startup(function()
 
             require("luasnip.loaders.from_vscode").lazy_load()
         end
-    })
+    },
 
-    use 'jremmen/vim-ripgrep'
+    {'jremmen/vim-ripgrep'},
 
-    use 'stefandtw/quickfix-reflector.vim'
+    {'stefandtw/quickfix-reflector.vim'},
 
-    use 'makerj/vim-pdf'
+    {'makerj/vim-pdf'},
 
-    use {
+    {
         "ellisonleao/gruvbox.nvim",
         config = function()
             vim.o.background = "dark" -- or "light" for light mode
             vim.cmd([[colorscheme gruvbox]])
         end
-    }
+    },
 
-    use {
+    {
         "AckslD/nvim-neoclip.lua",
-        requires = {
+        dependencies = {
              {'ibhagwan/fzf-lua'},
         },
         config = function()
             require('neoclip').setup()
         end,
-    }
+    },
 
-    use {
+    {
         'nvim-tree/nvim-tree.lua',
-        requires = {
+        dependencies = {
             'kyazdani42/nvim-web-devicons', -- optional, for file icons
         },
         config = function()
@@ -198,44 +191,42 @@ return require('packer').startup(function()
                 on_attach = on_attach,
             })
         end
-    }
+    },
 
-    -- Lua
-
-    use {
+    {
         "folke/which-key.nvim",
         config = function()
             require("which-key").setup {
                  -- defaults, for now
             }
         end
-    }
+    },
 
-    use {
+    {
         'junegunn/vim-easy-align',
         config = function()
         
         end
-    }
-    use {
+    },
+
+    {
         'gennaro-tedesco/nvim-peekup',
         config = function()
             require('nvim-peekup.config').on_keystroke["delay"] = ''
         end
-    }
+    },
 
-    use {
+    {
         'gaborvecsei/memento.nvim',
-        requires = {
+        dependencies = {
             'nvim-lua/plenary.nvim'
         },
-    }
+    },
 
-    use {
+    {
 		'mgnsk/autotabline.nvim',
 		config = function()
 			require("autotabline").setup()
 		end,
-    }
-
-end)
+    },
+}
