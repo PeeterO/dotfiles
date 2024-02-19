@@ -231,4 +231,11 @@ return require('packer').startup(function()
         },
     }
 
+    use {
+		'mgnsk/autotabline.nvim',
+		config = function()
+			require("autotabline").setup()
+		end,
+    }
+
 end)
