@@ -55,10 +55,10 @@ map('n', 'ga',          "<Plug>(EasyAlign)",                                    
 map('v', 'ga',          "<Plug>(EasyAlign)",                                          { noremap = true, desc = "Align"})
 map('n', 'gm',          "<cmd>lua require('memento').toggle()<CR>",                   { noremap = true, desc = "Previous files"})
 
-map('i', '<C-k>',         "<cmd>lua require('luasnip').expand()<CR>",                   {noremap = true, desc = "Snippet expand"})
-map('i', '<C-l>',         "<cmd>lua require('luasnip').jump(1)<CR>",                   {noremap = true, desc = "Snippet advance"})
-map('i', '<C-j>',         "<cmd>lua require('luasnip').jump(-1)<CR>",                   {noremap = true, desc = "Snippet back"})
-map('i', '<C-e>',         "<cmd>lua require('luasnip').jump(-1)<CR>",                   {noremap = true, desc = "Snippet back"})
+--map('i', '<C-k>',         "<cmd>lua require('luasnip').expand()<CR>",                   {noremap = true, desc = "Snippet expand"})
+map('i', '<C-n>',         "<cmd>lua require('luasnip').jump(1)<CR>",                   {noremap = true, desc = "Snippet advance"})
+map('i', '<C-p>',         "<cmd>lua require('luasnip').jump(-1)<CR>",                   {noremap = true, desc = "Snippet back"})
+--map('i', '<C-e>',         "<cmd>lua require('luasnip').jump(-1)<CR>",                   {noremap = true, desc = "Snippet back"})
 
 --vim.keymap.set({"i"}, "<C-K>", function() ls.expand() end, {silent = true})
 --vim.keymap.set({"i", "s"}, "<C-L>", function() ls.jump( 1) end, {silent = true})

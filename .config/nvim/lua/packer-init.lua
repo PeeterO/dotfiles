@@ -80,14 +80,19 @@ return {
                 }),
                 mapping = {
                     ['<C-e>'] = cmp.mapping.abort(),
-                    ["<C-n>"] = cmp.mapping(cmp.mapping.select_next_item(), {"i", "s"}),
-                    ["<C-p>"] = cmp.mapping(cmp.mapping.select_prev_item(), {"i", "s"}),
-                    ["<CR>"] = cmp.mapping.confirm(
+                    ["<C-j>"] = cmp.mapping(cmp.mapping.select_next_item(), {"i", "s"}),
+                    ["<C-k>"] = cmp.mapping(cmp.mapping.select_prev_item(), {"i", "s"}),
+                    [";"] = cmp.mapping.confirm(
                     {
                         behavior = cmp.ConfirmBehavior.Replace,
                         select = true
                     }),
-                }
+                },
+                snippet = {
+                    expand = function(args)
+                        require('luasnip').lsp_expand(args.body)
+                    end,
+                },
             })
 
         end
