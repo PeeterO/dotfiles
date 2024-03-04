@@ -1,4 +1,3 @@
-
 return {
     {
         'nvim-treesitter/nvim-treesitter',
@@ -27,7 +26,7 @@ return {
                 rainbow = {
                     enable = true,
                     extended_mode = true, -- Highlight also non-parentheses delimiters, boolean or table: lang -> boolean
-                    max_file_lines = 1000, -- Do not enable for files with more than 1000 lines, int
+                    max_file_lines = 4000, -- Do not enable for files with more than 1000 lines, int
                 }
             }
         end
@@ -53,7 +52,7 @@ return {
             lsp = require'lspconfig'
             lsp.pyright.setup{capabilities = capabilities,}
             lsp.clangd.setup{capabilities = capabilities,}
-            lsp.rls.setup{capabilities = capabilities,}
+            lsp.rust_analyzer.setup{capabilities = capabilities,}
 
             local cmp = require'cmp'
             cmp.setup({
@@ -108,7 +107,14 @@ return {
         end
     },
 
-    {'ibhagwan/fzf-lua'},
+    {'ibhagwan/fzf-lua',
+    config = function()
+        defaults = {
+            git_icons = false,
+            file_icons = false,
+        }
+    end
+    },
 
     {
         'windwp/nvim-autopairs',
@@ -234,4 +240,6 @@ return {
 			require("autotabline").setup()
 		end,
     },
+
+    { 'LudoPinelli/comment-box.nvim' },
 }
