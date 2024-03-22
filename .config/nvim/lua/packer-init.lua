@@ -242,4 +242,6 @@ return {
     },
 
     { 'LudoPinelli/comment-box.nvim' },
+
+    { 'akinsho/toggleterm.nvim', config = true },
 }
