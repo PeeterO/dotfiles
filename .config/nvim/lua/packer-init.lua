@@ -2,6 +2,15 @@ return {
     {
         'nvim-treesitter/nvim-treesitter',
         dependencies = { 'p00f/nvim-ts-rainbow'},
+        { 'nvim-treesitter/nvim-treesitter-context',
+        config = function()
+            require'treesitter-context'.setup{
+                max_lines = 3,
+                mode = 'topline',
+                trim_scope = 'inner'
+            }
+        end,
+    },
         config = function()
             require'nvim-treesitter.configs'.setup {
                 highlight = {
@@ -81,7 +90,7 @@ return {
                     ['<C-e>'] = cmp.mapping.abort(),
                     ["<C-j>"] = cmp.mapping(cmp.mapping.select_next_item(), {"i", "s"}),
                     ["<C-k>"] = cmp.mapping(cmp.mapping.select_prev_item(), {"i", "s"}),
-                    [";"] = cmp.mapping.confirm(
+                    ["\'"] = cmp.mapping.confirm(
                     {
                         behavior = cmp.ConfirmBehavior.Replace,
                         select = true
@@ -186,7 +195,12 @@ return {
              {'ibhagwan/fzf-lua'},
         },
         config = function()
-            require('neoclip').setup()
+            require('neoclip').setup({
+                fzf = {
+                    paste = '<C-b>',
+                    paste_behind = '<C-y>'
+                }
+            })
         end,
     },
 
@@ -244,4 +258,6 @@ return {
     { 'LudoPinelli/comment-box.nvim' },
 
     { 'akinsho/toggleterm.nvim', config = true },
+
+    { 'jbyuki/nabla.nvim' },
 }
