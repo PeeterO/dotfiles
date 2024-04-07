@@ -196,9 +196,11 @@ return {
         },
         config = function()
             require('neoclip').setup({
-                fzf = {
-                    paste = '<C-b>',
-                    paste_behind = '<C-y>'
+                keys = {
+                    fzf = {
+                        paste = 'ctrl-b',
+                        paste_behind = 'ctrl-y'
+                    }
                 }
             })
         end,
