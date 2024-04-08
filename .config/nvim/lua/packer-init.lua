@@ -262,4 +262,8 @@ return {
     { 'akinsho/toggleterm.nvim', config = true },
 
     { 'jbyuki/nabla.nvim' },
+
+    { 'adelarsq/vim-matchit' },
+
+    { 'mbbill/undotree' },
 }
