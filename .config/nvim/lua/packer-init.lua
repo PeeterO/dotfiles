@@ -266,4 +266,6 @@ return {
     { 'adelarsq/vim-matchit' },
 
     { 'mbbill/undotree' },
+
+    { 'mfussenegger/nvim-dap' },
 }

@@ -78,4 +78,5 @@ map('n', 'q:',          ':q',                                          { noremap
 map('t', '<Esc><Esc>',  "<C-\\><C-n>",                                 { noremap = true, desc = "Exit terminal insert"})
 map('n', '<Leader>~',   "<cmd>source $MYVIMRC<CR>",                    { noremap = true, desc = "Reload vim conf"})
 map('n', '<Leader>p',   "<cmd>set paste!<CR>",                         { noremap = true, desc = "Toggle paste mode"})
+map('n', '<Leader>q',   ":copen<CR>",                                  { noremap = true, desc = "Quickfix open"})
 
