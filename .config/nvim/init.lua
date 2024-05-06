@@ -76,8 +76,8 @@ map({ 'n', 'v' }, '<backspace>', '^',                                  { noremap
 map({ 'n', 'v' }, '<Tab>',       '%',                                  { noremap = true, desc = "Easy bracket jump"})
 map({ 'n', 'v' }, '<Leader>.',  "<cmd>ToggleTerm direction=float<CR>", { noremap = true, desc = "Toggle float term"})
 map('n', 'q:',          ':q',                                          { noremap = true, desc = "Typo avoidance"})
-map('t', '<Esc><Esc>',  "<C-\\><C-n>",                                 { noremap = true, desc = "Exit terminal insert"})
 map('n', '<Leader>~',   "<cmd>source $MYVIMRC<CR>",                    { noremap = true, desc = "Reload vim conf"})
 map('n', '<Leader>p',   "<cmd>set paste!<CR>",                         { noremap = true, desc = "Toggle paste mode"})
 map('n', '<Leader>q',   ":copen<CR>",                                  { noremap = true, desc = "Quickfix open"})
+map('t', '\\\\',  "<C-\\><C-n>",                                       { noremap = true, desc = "Exit terminal insert"})
 
