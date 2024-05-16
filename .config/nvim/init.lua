@@ -33,8 +33,9 @@ vim.o.mouse       = ''
 vim.o.clopboard   = unnamedplus
 
 --mappings
-fzf = require('fzf-lua')
+local fzf = require('fzf-lua')
 local map = vim.keymap.set 
+local lazygit = require('toggleterm.terminal').Terminal:new({ cmd = "lazygit", hidden = true, direction="float"})
 map({ "n" }, '<Leader>f', fzf.blines,                                 { silent = true, noremap = true, desc = "Fuzzy lines"})
 map({ 'n' }, '<Leader>d', fzf.tags,                                   { silent = true, noremap = true, desc = "Fuzzy tags"})
 map({ 'n' }, '<Leader>g', fzf.files,                                  { silent = true, noremap = true, desc = "Fuzzy files"})
@@ -52,13 +53,7 @@ map({ 'i' }, '<C-p>',     function() require('luasnip').jump(-1) end, { silent =
 map({ 'n' }, '<Leader>t', require('nvim-tree.api').tree.toggle,       { silent = true, noremap = true, desc = "File tree toggle"})
 map({ 'n' }, '<Leader>e', vim.diagnostic.open_float,                  { silent = true, noremap = true, desc = "File tree toggle"})
 map({ 'n' }, '<leader>u',  vim.cmd.UndotreeToggle,                    { silent = true, noremap = true, desc = "Undo tree toggle"})
-
-
---vim.keymap.set({"i", "s"}, "<C-E>", function()
-    --if ls.choice_active() then
-        --ls.change_choice(1)
-    --end
---end,                                                                { silent = true})
+map({ 'n', 'v' }, '<Leader>l',  function() lazygit:toggle() end,      { noremap = true, desc = "Toggle Lazygit term"})
 
 map({ 'n', 'v' }, '<Leader>as',  '<C-w>l',                             { noremap = true, desc = "Pane navigation"})
 map({ 'n', 'v' }, '<Leader>sw',  '<C-w>k',                             { noremap = true, desc = "Pane navigation"})
