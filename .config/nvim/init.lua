@@ -48,6 +48,7 @@ map({ 'n' }, '<Leader>x', fzf.commands,                                  { silen
 map({ 'n' }, '<Leader>z', fzf.builtin,                                   { silent = true, noremap = true, desc = "Fuzzy commands"})
 map({ 'n' }, '<Leader>h', fzf.git_bcommits,                              { silent = true, noremap = true, desc = "File history"})
 map({ 'n' }, '<Leader>l', fzf.lsp_workspace_diagnostics,                 { silent = true, noremap = true, desc = "Lsp diagnostics"})
+map({ 'n' }, 'gs',        fzf.lsp_document_symbols,                      { silent = true, noremap = true, desc = "Lsp symbols"})
 map({ 'n' }, '<Leader>y', require('neoclip.fzf'),                        { silent = true, noremap = true, desc = "Fuzzy yank history"})
 map({ 'n' }, 'gm',        require('memento').toggle,                     { silent = true, noremap = true, desc = "Previous files"})
 map({ 'i' }, '<C-n>',     function() require('luasnip').jump(1) end,     { silent = true, noremap = true, desc = "Snippet advance"})
