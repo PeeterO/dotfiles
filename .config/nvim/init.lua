@@ -22,7 +22,8 @@ require("lazy").setup(plugins, opts)
 vim.g.mapleader   = ','
 vim.o.number      = true
 vim.o.updatetime  = 300
-vim.o.ttimeout    = 300
+vim.o.ttimeout    = true
+vim.o.ttimeoutlen = 300
 vim.o.timeout     = true
 vim.o.timeoutlen  = 300
 vim.o.smartindent = true
@@ -30,7 +31,7 @@ vim.o.tabstop     = 4
 vim.o.expandtab   = true
 vim.o.shiftwidth  = 4
 vim.o.mouse       = ''
-vim.o.clopboard   = unnamedplus
+vim.o.clipboard   = unnamedplus
 
 --mappings
 local fzf = require('fzf-lua')
