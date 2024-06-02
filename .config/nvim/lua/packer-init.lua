@@ -54,7 +54,8 @@ return {
             'ray-x/cmp-treesitter',
             'uga-rosa/cmp-dictionary',
             'lukas-reineke/cmp-rg',
-            'saadparwaiz1/cmp_luasnip'
+            'saadparwaiz1/cmp_luasnip',
+            'micangl/cmp-vimtex',
         },
         config = function()
             local capabilities = require('cmp_nvim_lsp').default_capabilities()
@@ -62,6 +63,7 @@ return {
             lsp.pyright.setup{capabilities = capabilities,}
             lsp.clangd.setup{capabilities = capabilities,}
             lsp.rust_analyzer.setup{capabilities = capabilities,}
+            lsp.texlab.setup{capabilities = capabilities,}
 
             local cmp = require'cmp'
             cmp.setup({
@@ -73,6 +75,7 @@ return {
                     {name = "tags"},
                     {name = "calc"},
                     {name = "treesitter"},
+                    {name = "vimtex"},
                     {
                         name = "luasnip",
                         option = {show_autosnippets = true}
@@ -125,14 +128,10 @@ return {
     end
     },
 
-    {
-        'windwp/nvim-autopairs',
-        config = function()
-            require'nvim-autopairs'.setup()
-        end
-    },
+    {'cohama/lexima.vim'},
 
-    {'tpope/vim-surround'},
+    {'tpope/vim-surround',
+        dependencies = 'tpope/vim-repeat'},
 
     {
         'kyazdani42/nvim-web-devicons',
@@ -268,4 +267,12 @@ return {
     { 'mbbill/undotree' },
 
     { 'mfussenegger/nvim-dap' },
+	{
+		"lervag/vimtex",
+		lazy = false,     -- we don't want to lazy load VimTeX
+		-- tag = "v2.15", -- uncomment to pin to a specific release
+		init = function()
+			-- VimTeX configuration goes here
+		end
+	},
 }
