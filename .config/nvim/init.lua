@@ -81,3 +81,13 @@ map('n', '<Leader>p',   "<cmd>set paste!<CR>",                           { norem
 map('n', '<Leader>q',   ":copen<CR>",                                    { noremap = true, desc = "Quickfix open"})
 map('t', '<Leader><Leader>',  "<C-\\><C-n>",                             { noremap = true, desc = "Exit terminal insert"})
 
+map('n', '<M-1>',  "1gt",                                                { noremap = true, desc = "Tab1"})
+map('n', '<M-2>',  "2gt",                                                { noremap = true, desc = "Tab2"})
+map('n', '<M-3>',  "3gt",                                                { noremap = true, desc = "Tab3"})
+map('n', '<M-4>',  "4gt",                                                { noremap = true, desc = "Tab4"})
+map('n', '<M-5>',  "5gt",                                                { noremap = true, desc = "Tab5"})
+map('n', '<M-6>',  "6gt",                                                { noremap = true, desc = "Tab6"})
+map('n', '<M-7>',  "7gt",                                                { noremap = true, desc = "Tab7"})
+map('n', '<M-8>',  "8gt",                                                { noremap = true, desc = "Tab8"})
+
+
