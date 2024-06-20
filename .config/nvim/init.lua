@@ -31,7 +31,7 @@ vim.o.tabstop     = 4
 vim.o.expandtab   = true
 vim.o.shiftwidth  = 4
 vim.o.mouse       = ''
-vim.o.clipboard   = unnamedplus
+vim.o.clipboard   = "unnamedplus"
 
 --mappings
 local fzf = require('fzf-lua')
@@ -44,8 +44,6 @@ map({ 'n' }, '<Leader>g', fzf.files,                                     { silen
 map({ 'n' }, '<Leader>s', fzf.git_stash,                                 { silent = true, noremap = true, desc = "Fuzzy git stash"})
 map({ 'n' }, '<Leader>r', fzf.grep,                                      { silent = true, noremap = true, desc = "Fuzzy ripgrep"})
 map({ 'v' }, '<Leader>r', fzf.grep_visual,                               { silent = true, noremap = true, desc = "Fuzzy visual selection ripgrep"})
-map({ 'n' }, '<Leader>x', fzf.commands,                                  { silent = true, noremap = true, desc = "Fuzzy neovim commands"})
-map({ 'n' }, '<Leader>z', fzf.builtin,                                   { silent = true, noremap = true, desc = "Fuzzy commands"})
 map({ 'n' }, '<Leader>h', fzf.git_bcommits,                              { silent = true, noremap = true, desc = "File history"})
 map({ 'n' }, '<Leader>l', fzf.lsp_workspace_diagnostics,                 { silent = true, noremap = true, desc = "Lsp diagnostics"})
 map({ 'n' }, 'gs',        fzf.lsp_document_symbols,                      { silent = true, noremap = true, desc = "Lsp symbols"})
@@ -57,6 +55,9 @@ map({ 'n' }, '<Leader>t', require('nvim-tree.api').tree.toggle,          { silen
 map({ 'n' }, '<Leader>e', vim.diagnostic.open_float,                     { silent = true, noremap = true, desc = "File tree toggle"})
 map({ 'n' }, '<leader>u',  vim.cmd.UndotreeToggle,                       { silent = true, noremap = true, desc = "Undo tree toggle"})
 map({ 'n' }, 'gl',  function() lazygit:toggle() end,                     { noremap = true, desc = "Toggle Lazygit term"})
+
+map({ 'n', 'v' }, '<Leader>x', fzf.commands,                                  { silent = true, noremap = true, desc = "Fuzzy neovim commands"})
+map({ 'n', 'v' }, '<Leader>z', fzf.builtin,                                   { silent = true, noremap = true, desc = "Fuzzy commands"})
 
 map({ 'n', 'v' }, '<Leader>as',  '<C-w>l',                               { noremap = true, desc = "Pane navigation"})
 map({ 'n', 'v' }, '<Leader>sw',  '<C-w>k',                               { noremap = true, desc = "Pane navigation"})
