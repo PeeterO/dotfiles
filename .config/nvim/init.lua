@@ -31,6 +31,7 @@ vim.o.tabstop     = 4
 vim.o.expandtab   = true
 vim.o.shiftwidth  = 4
 vim.o.mouse       = ''
+vim.o.clipboard = "unnamedplus"
 vim.g.clipboard = {
     name = 'OSC 52',
     copy = {
