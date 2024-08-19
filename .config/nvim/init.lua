@@ -66,6 +66,7 @@ map({ 'n' }, '<Leader>t', require('nvim-tree.api').tree.toggle,          { silen
 map({ 'n' }, '<Leader>e', vim.diagnostic.open_float,                     { silent = true, noremap = true, desc = "File tree toggle"})
 map({ 'n' }, '<leader>u',  vim.cmd.UndotreeToggle,                       { silent = true, noremap = true, desc = "Undo tree toggle"})
 map({ 'n' }, 'gl',  function() lazygit:toggle() end,                     { noremap = true, desc = "Toggle Lazygit term"})
+map({ 'n' }, 'gr',  vim.lsp.buf.rename,                                  { noremap = true, desc = "LSP rename"})
 
 map({ 'n', 'v' }, '<Leader>x', fzf.commands,                                  { silent = true, noremap = true, desc = "Fuzzy neovim commands"})
 map({ 'n', 'v' }, '<Leader>z', fzf.builtin,                                   { silent = true, noremap = true, desc = "Fuzzy commands"})
