@@ -275,4 +275,6 @@ return {
 			-- VimTeX configuration goes here
 		end
 	},
+
+    {'jbyuki/venn.nvim'},
 }

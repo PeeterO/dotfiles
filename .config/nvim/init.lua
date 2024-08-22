@@ -67,6 +67,7 @@ map({ 'n' }, '<Leader>e', vim.diagnostic.open_float,                     { silen
 map({ 'n' }, '<leader>u',  vim.cmd.UndotreeToggle,                       { silent = true, noremap = true, desc = "Undo tree toggle"})
 map({ 'n' }, 'gl',  function() lazygit:toggle() end,                     { noremap = true, desc = "Toggle Lazygit term"})
 map({ 'n' }, 'gr',  vim.lsp.buf.rename,                                  { noremap = true, desc = "LSP rename"})
+map({ 'n' }, 'gk',  vim.lsp.semantic_tokens.get_at_pos,                  { noremap = true, desc = "LSP semantic token"})
 
 map({ 'n', 'v' }, '<Leader>x', fzf.commands,                                  { silent = true, noremap = true, desc = "Fuzzy neovim commands"})
 map({ 'n', 'v' }, '<Leader>z', fzf.builtin,                                   { silent = true, noremap = true, desc = "Fuzzy commands"})
@@ -85,8 +86,9 @@ map({ 'n', 'v' }, '<C-j>',       '*',                                    { norem
 map({ 'n', 'v' }, '<space>',     '$',                                    { noremap = true, desc = "Easy end of line"})
 map({ 'n', 'v' }, '<backspace>', '^',                                    { noremap = true, desc = "Easy beginning of line"})
 map({ 'n', 'v' }, '<Tab>',       '%',                                    { noremap = true, desc = "Easy bracket jump"})
-map({ 'n'}, '<Leader>.',  "<cmd>ToggleTerm direction direction=tab<CR>", { noremap = true, desc = "Toggle float term"})
+map({ 'n' }, '<Leader>.',  "<cmd>ToggleTerm direction direction=tab<CR>",{ noremap = true, desc = "Toggle float term"})
 map({ 'v' }, '<Leader>.',  "<cmd>ToggleTermSendVisualLines<CR>",         { noremap = true, desc = "Toggle float term"})
+map({ 'v' }, 't',   ":VBox<CR>",                                         { noremap = true, desc = "Comment box"})
 
 map('n', 'q:',          ':q',                                            { noremap = true, desc = "Typo avoidance"})
 map('n', '<Leader>~',   "<cmd>source $MYVIMRC<CR>",                      { noremap = true, desc = "Reload vim conf"})
