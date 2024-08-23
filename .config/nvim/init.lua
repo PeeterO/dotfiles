@@ -79,7 +79,7 @@ map({ 'n', 'v' }, '<Leader>sa',  '<C-w>h',                               { norem
 map({ 'n', 'v' }, '<Leader>aas', '<C-w>L',                               { noremap = true, desc = "Pane navigation"})
 map({ 'n', 'v' }, '<Leader>ssw', '<C-w>k',                               { noremap = true, desc = "Pane navigation"})
 map({ 'n', 'v' }, '<Leader>wws', '<C-w>J',                               { noremap = true, desc = "Pane navigation"})
-map({ 'n', 'v' }, '<Leader>ssa', '<C-w>h',                               { noremap = true, desc = "Pane navigation"})
+map({ 'n', 'v' }, '<Leader>ssa', '<C-w>H',                               { noremap = true, desc = "Pane navigation"})
 map({ 'n', 'v' }, 'ga',          "<Plug>(EasyAlign)",                    { noremap = true, desc = "Align"})
 map({ 'n', 'v' }, '<C-k>',       '#',                                    { noremap = true, desc = "Find under cursor, up"})
 map({ 'n', 'v' }, '<C-j>',       '*',                                    { noremap = true, desc = "Find under cursor, down"})
@@ -93,7 +93,7 @@ map({ 'v' }, 't',   ":VBox<CR>",                                         { norem
 map('n', 'q:',          ':q',                                            { noremap = true, desc = "Typo avoidance"})
 map('n', '<Leader>~',   "<cmd>source $MYVIMRC<CR>",                      { noremap = true, desc = "Reload vim conf"})
 map('n', '<Leader>p',   "<cmd>set paste!<CR>",                           { noremap = true, desc = "Toggle paste mode"})
-map('n', '<Leader>q',   ":copen<CR>",                                    { noremap = true, desc = "Quickfix open"})
+map('n', '<Leader>q',   require("quicker").toggle,                                    { noremap = true, desc = "Toggle quickfix"})
 map('t', '<Leader><Leader>',  "<C-\\><C-n>",                             { noremap = true, desc = "Exit terminal insert"})
 
 map('n', '<M-1>',  "1gt",                                                { noremap = true, desc = "Tab1"})
