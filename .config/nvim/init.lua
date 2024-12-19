@@ -83,6 +83,8 @@ map({ 'n', 'v' }, '<Leader>ssa', '<C-w>H',                               { norem
 map({ 'n', 'v' }, 'ga',          "<Plug>(EasyAlign)",                    { noremap = true, desc = "Align"})
 map({ 'n', 'v' }, '<C-k>',       '#',                                    { noremap = true, desc = "Find under cursor, up"})
 map({ 'n', 'v' }, '<C-j>',       '*',                                    { noremap = true, desc = "Find under cursor, down"})
+map({ 'n', 'v' }, '<C-n>',       '}',                                    { noremap = true, desc = "Jump up"})
+map({ 'n', 'v' }, '<C-m>',       '{',                                    { noremap = true, desc = "Jump down"})
 map({ 'n', 'v' }, '<space>',     '$',                                    { noremap = true, desc = "Easy end of line"})
 map({ 'n', 'v' }, '<backspace>', '^',                                    { noremap = true, desc = "Easy beginning of line"})
 map({ 'n', 'v' }, '<Tab>',       '%',                                    { noremap = true, desc = "Easy bracket jump"})
