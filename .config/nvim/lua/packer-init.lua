@@ -64,6 +64,7 @@ return {
             lsp.clangd.setup{capabilities = capabilities,}
             lsp.rust_analyzer.setup{capabilities = capabilities,}
             lsp.texlab.setup{capabilities = capabilities,}
+            lsp.robotframework_ls.setup{capabilities = capabilities,}
 
             local cmp = require'cmp'
             cmp.setup({
@@ -272,7 +273,48 @@ return {
 
     { 'mbbill/undotree' },
 
-    { 'mfussenegger/nvim-dap' },
+    { 'mfussenegger/nvim-dap',
+
+    config = function()
+        local dap = require('dap')
+        dap.adapters.cppdbg = {
+            id = 'cppdbg',
+            type = 'executable',
+            command = vim.fn.stdpath('data').. '/mason/bin/OpenDebugAD7',
+        }
+        dap.configurations.python = {
+            {
+                type = 'python';
+                request = 'launch';
+                name = "Launch file";
+                program = "${file}";
+                pythonPath = function()
+                    return '/usr/bin/python'
+                end;
+            },
+        }
+        dap.configurations.cpp = {
+            {
+                name = "Launch file",
+                type = "cppdbg",
+                request = "launch",
+                program = function()
+                    return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+                end,
+                cwd = '${workspaceFolder}',
+                stopAtEntry = true,
+            },
+        }
+    end
+    },
+
+    {
+        'williamboman/mason.nvim',
+        config = function()
+            require("mason").setup()
+        end
+    },
+
 	{
 		"lervag/vimtex",
 		lazy = false,     -- we don't want to lazy load VimTeX

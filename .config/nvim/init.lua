@@ -19,28 +19,29 @@ require("lazy").setup(plugins, opts)
 
 
 --settings
-vim.g.mapleader   = ','
-vim.o.number      = true
-vim.o.updatetime  = 300
-vim.o.ttimeout    = true
-vim.o.ttimeoutlen = 300
-vim.o.timeout     = true
-vim.o.timeoutlen  = 300
-vim.o.smartindent = true
-vim.o.tabstop     = 4
-vim.o.expandtab   = true
-vim.o.shiftwidth  = 4
-vim.o.mouse       = ''
-vim.o.clipboard = "unnamedplus"
-vim.g.clipboard = {
-    name = 'OSC 52',
-    copy = {
-        ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
-        ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
+vim.g.mapleader     = ','
+vim.o.number        = true
+vim.o.updatetime    = 300
+vim.o.ttimeout      = true
+vim.o.ttimeoutlen   = 300
+vim.o.timeout       = true
+vim.o.timeoutlen    = 300
+vim.o.smartindent   = true
+vim.o.tabstop       = 4
+vim.o.expandtab     = true
+vim.o.shiftwidth    = 4
+vim.o.mouse         = ''
+vim.o.termguicolors = true
+vim.o.clipboard     = "unnamedplus"
+vim.g.clipboard     = {
+    name            = 'OSC 52',
+    copy            = {
+        ['+']       = require('vim.ui.clipboard.osc52').copy('+'),
+        ['*']       = require('vim.ui.clipboard.osc52').copy('*'),
     },
-    paste = {
-        ['+'] = require('vim.ui.clipboard.osc52').paste('+'),
-        ['*'] = require('vim.ui.clipboard.osc52').paste('*'),
+    paste           = {
+        ['+']       = require('vim.ui.clipboard.osc52').paste('+'),
+        ['*']       = require('vim.ui.clipboard.osc52').paste('*'),
     },
 }
 
@@ -108,3 +109,26 @@ map('n', '<M-7>',  "7gt",                                                { norem
 map('n', '<M-8>',  "8gt",                                                { noremap = true, desc = "Tab8"})
 
 
+map('n', '<F5>', function() require('dap').continue() end)
+map('n', '<F10>', function() require('dap').step_over() end)
+map('n', '<F11>', function() require('dap').step_into() end)
+map('n', '<F12>', function() require('dap').step_out() end)
+map('n', '<Leader>b', function() require('dap').toggle_breakpoint() end)
+map('n', '<Leader>B', function() require('dap').set_breakpoint() end)
+map('n', '<Leader>lp', function() require('dap').set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end)
+map('n', '<Leader>dr', function() require('dap').repl.open() end)
+map('n', '<Leader>dl', function() require('dap').run_last() end)
+map({'n', 'v'}, '<Leader>dh', function()
+    require('dap.ui.widgets').hover()
+end)
+map({'n', 'v'}, '<Leader>dp', function()
+    require('dap.ui.widgets').preview()
+end)
+map('n', '<Leader>df', function()
+    local widgets = require('dap.ui.widgets')
+    widgets.centered_float(widgets.frames)
+end)
+map('n', '<Leader>ds', function()
+    local widgets = require('dap.ui.widgets')
+    widgets.centered_float(widgets.scopes)
+end)
