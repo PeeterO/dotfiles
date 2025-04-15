@@ -98,7 +98,7 @@ map({ 'v' }, 't',   ":VBox<CR>",                                         { norem
 map('n', 'q:',          ':q',                                            { noremap = true, desc = "Typo avoidance"})
 map('n', '<Leader>~',   "<cmd>source $MYVIMRC<CR>",                      { noremap = true, desc = "Reload vim conf"})
 map('n', '<Leader>p',   "<cmd>set paste!<CR>",                           { noremap = true, desc = "Toggle paste mode"})
-map('n', '<Leader>q',   require("quicker").toggle,                                    { noremap = true, desc = "Toggle quickfix"})
+map('n', '<Leader>q',   require("quicker").toggle,                       { noremap = true, desc = "Toggle quickfix"})
 map('t', '<Leader><Leader>',  "<C-\\><C-n>",                             { noremap = true, desc = "Exit terminal insert"})
 
 map('n', '<M-1>',  "1gt",                                                { noremap = true, desc = "Tab1"})
@@ -109,6 +109,15 @@ map('n', '<M-5>',  "5gt",                                                { norem
 map('n', '<M-6>',  "6gt",                                                { noremap = true, desc = "Tab6"})
 map('n', '<M-7>',  "7gt",                                                { noremap = true, desc = "Tab7"})
 map('n', '<M-8>',  "8gt",                                                { noremap = true, desc = "Tab8"})
+
+map('t', '<M-1>',  "<C-\\><C-n>gt",                                      { noremap = true, desc = "Tab1"})
+map('t', '<M-2>',  "<C-\\><C-n>gt",                                      { noremap = true, desc = "Tab2"})
+map('t', '<M-3>',  "<C-\\><C-n>gt",                                      { noremap = true, desc = "Tab3"})
+map('t', '<M-4>',  "<C-\\><C-n>gt",                                      { noremap = true, desc = "Tab4"})
+map('t', '<M-5>',  "<C-\\><C-n>gt",                                      { noremap = true, desc = "Tab5"})
+map('t', '<M-6>',  "<C-\\><C-n>gt",                                      { noremap = true, desc = "Tab6"})
+map('t', '<M-7>',  "<C-\\><C-n>gt",                                      { noremap = true, desc = "Tab7"})
+map('t', '<M-8>',  "<C-\\><C-n>gt",                                      { noremap = true, desc = "Tab8"})
 
 
 map('n', '<F5>', function() require('dap').continue() end)
