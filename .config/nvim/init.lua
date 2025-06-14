@@ -33,6 +33,7 @@ vim.o.shiftwidth    = 4
 vim.o.mouse         = ''
 vim.o.termguicolors = true
 vim.o.clipboard     = "unnamed"
+vim.o.ic            = true
 vim.g.clipboard     = {
     name            = 'OSC 52',
     copy            = {
@@ -44,6 +45,7 @@ vim.g.clipboard     = {
         ['*']       = require('vim.ui.clipboard.osc52').paste('*'),
     },
 }
+vim.cmd.colorscheme('retrobox')
 
 --mappings
 local fzf = require('fzf-lua')
