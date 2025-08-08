@@ -51,6 +51,7 @@ vim.cmd.colorscheme('retrobox')
 local fzf = require('fzf-lua')
 local map = vim.keymap.set 
 local lazygit = require('toggleterm.terminal').Terminal:new({ cmd = "lazygit", hidden = true, direction="float"})
+local treetoggle = function() require('nvim-tree.api').tree.toggle({find_file = true}) end
 
 map({ "n" }, '<Leader>f', fzf.blines,                                    { silent = true, noremap = true, desc = "Fuzzy lines"})
 map({ 'n' }, '<Leader>d', fzf.tags,                                      { silent = true, noremap = true, desc = "Fuzzy tags"})
@@ -66,7 +67,7 @@ map({ 'n' }, '<Leader>y', require('neoclip.fzf'),                        { silen
 map({ 'n' }, 'gm',        require('memento').toggle,                     { silent = true, noremap = true, desc = "Previous files"})
 map({ 'i' }, '<C-n>',     function() require('luasnip').jump(1) end,     { silent = true, noremap = true, desc = "Snippet advance"})
 map({ 'i' }, '<C-p>',     function() require('luasnip').jump(-1) end,    { silent = true, noremap = true, desc = "Snippet back"})
-map({ 'n' }, '<Leader>t', require('nvim-tree.api').tree.toggle,          { silent = true, noremap = true, desc = "File tree toggle"})
+map({ 'n' }, '<Leader>t', treetoggle,                                    { silent = true, noremap = true, desc = "File tree toggle"})
 map({ 'n' }, '<Leader>e', vim.diagnostic.open_float,                     { silent = true, noremap = true, desc = "Show line error"})
 map({ 'n' }, '<leader>u',  vim.cmd.UndotreeToggle,                       { silent = true, noremap = true, desc = "Undo tree toggle"})
 map({ 'n' }, 'gl',  function() lazygit:toggle() end,                     { noremap = true, desc = "Toggle Lazygit term"})
