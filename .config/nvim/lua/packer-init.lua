@@ -1,7 +1,7 @@
 return {
     {
         'nvim-treesitter/nvim-treesitter',
-        dependencies = { { 'p00f/nvim-ts-rainbow'},
+        dependencies = { { 'hiphish/rainbow-delimiters.nvim'},
         { 'nvim-treesitter/nvim-treesitter-context',
         config = function()
             require'treesitter-context'.setup{
@@ -11,34 +11,52 @@ return {
             }
         end,
     } },
-        config = function()
-            require'nvim-treesitter.configs'.setup {
+    config = function()
+        require'nvim-treesitter.configs'.setup {
+            highlight = {
+                enable = true,
+                custom_captures = {
+                    -- Highlight the @foo.bar capture group with the "Identifier" highlight group.
+                    -- ["foo.bar"] = "Identifier",
+                },
+            },
+            incremental_selection = {
+                enable = true,
+                keymaps = {
+                    init_selection = "gnn",
+                    node_incremental = "grn",
+                    scope_incremental = "grc",
+                    node_decremental = "grm",
+                },
+            },
+            indent = {
+                enable = false --is buggy
+            },
+            require('rainbow-delimiters.setup').setup {
+                strategy = {
+                    [''] = 'rainbow-delimiters.strategy.global',
+                    vim = 'rainbow-delimiters.strategy.local',
+                },
+                query = {
+                    [''] = 'rainbow-delimiters',
+                    lua = 'rainbow-blocks',
+                },
+                priority = {
+                    [''] = 110,
+                    lua = 210,
+                },
                 highlight = {
-                    enable = true,
-                    custom_captures = {
-                        -- Highlight the @foo.bar capture group with the "Identifier" highlight group.
-                        -- ["foo.bar"] = "Identifier",
-                    },
+                    'RainbowDelimiterRed',
+                    'RainbowDelimiterYellow',
+                    'RainbowDelimiterBlue',
+                    'RainbowDelimiterOrange',
+                    'RainbowDelimiterGreen',
+                    'RainbowDelimiterViolet',
+                    'RainbowDelimiterCyan',
                 },
-                incremental_selection = {
-                    enable = true,
-                    keymaps = {
-                        init_selection = "gnn",
-                        node_incremental = "grn",
-                        scope_incremental = "grc",
-                        node_decremental = "grm",
-                    },
-                },
-                indent = {
-                    enable = false --is buggy
-                },
-                rainbow = {
-                    enable = true,
-                    extended_mode = true, -- Highlight also non-parentheses delimiters, boolean or table: lang -> boolean
-                    max_file_lines = 4000, -- Do not enable for files with more than 1000 lines, int
-                }
             }
-        end
+        }
+    end
     },
 
     {
@@ -178,6 +196,26 @@ return {
 
     {
         'stevearc/quicker.nvim',
+        config = function()
+            require("quicker").setup({
+                keys = {
+                    {
+                        ">",
+                        function()
+                            require("quicker").expand({ before = 2, after = 2, add_to_existing = true })
+                        end,
+                        desc = "Expand quickfix context",
+                    },
+                    {
+                        "<",
+                        function()
+                            require("quicker").collapse()
+                        end,
+                        desc = "Collapse quickfix context",
+                    },
+                },
+            })
+        end,
         event = "FileType qf",
         ---@module "quicker"
         ---@type quicker.SetupOptions

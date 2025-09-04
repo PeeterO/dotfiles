@@ -124,7 +124,10 @@ map('t', '<M-6>',  "<C-\\><C-n>gt",                                      { norem
 map('t', '<M-7>',  "<C-\\><C-n>gt",                                      { noremap = true, desc = "Tab7"})
 map('t', '<M-8>',  "<C-\\><C-n>gt",                                      { noremap = true, desc = "Tab8"})
 
+-- 
+fzf.config.defaults.actions.files["ctrl-q"] = require("trouble.sources.fzf").actions.open
 
+-- dap mappings
 map('n', '<F5>', function() require('dap').continue() end)
 map('n', '<F10>', function() require('dap').step_over() end)
 map('n', '<F11>', function() require('dap').step_into() end)
