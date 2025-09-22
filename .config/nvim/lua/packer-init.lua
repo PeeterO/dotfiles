@@ -77,12 +77,13 @@ return {
         },
         config = function()
             local capabilities = require('cmp_nvim_lsp').default_capabilities()
-            lsp = require'lspconfig'
-            lsp.pyright.setup{capabilities = capabilities,}
-            lsp.clangd.setup{capabilities = capabilities,}
-            lsp.rust_analyzer.setup{capabilities = capabilities,}
-            lsp.texlab.setup{capabilities = capabilities,}
-            lsp.robotframework_ls.setup{capabilities = capabilities,}
+            lsp = vim.lsp
+            lsp.config('*', {capabilities = capabilities})
+            lsp.enable('rust_analyzer')
+            lsp.enable('pyright')
+            lsp.enable('clangd')
+            lsp.enable('texlab')
+            lsp.enable('robotframework_ls')
 
             local cmp = require'cmp'
             cmp.setup({
