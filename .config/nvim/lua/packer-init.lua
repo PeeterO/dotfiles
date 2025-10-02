@@ -418,11 +418,11 @@ return {
                 --"<cmd>Trouble loclist toggle<cr>",
                 --desc = "Location List (Trouble)",
             --},
-            {
-                "<leader>c",
-                "<cmd>Trouble qflist toggle<cr>",
-                desc = "Quickfix List (Trouble)",
-            },
+            --{
+                --"<leader>c",
+                --"<cmd>Trouble qflist toggle<cr>",
+                --desc = "Quickfix List (Trouble)",
+            --},
         },
     },
 }

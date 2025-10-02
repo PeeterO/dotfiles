@@ -76,6 +76,7 @@ map({ 'n' }, 'gk',  vim.lsp.semantic_tokens.get_at_pos,                  { norem
 map({ 'n' }, 'gj',  ":cnext<CR>",                                        { noremap = true, desc = "Quickfix next"})
 map({ 'n' }, 'gk',  ":cprev<CR>",                                        { noremap = true, desc = "Quickfix prev"})
 map({ 'n' }, '<leader>v',  vim.cmd.vsplit,                               { silent = true, noremap = true, desc = "Undo tree toggle"})
+map({ 'n' }, '<Leader>c', fzf.git_status,                                { noremap = true, desc = "Fzf git status"})
 
 map({ 'n', 'v' }, '<Leader>x', fzf.commands,                                  { silent = true, noremap = true, desc = "Fuzzy neovim commands"})
 map({ 'n', 'v' }, '<Leader>z', fzf.builtin,                                   { silent = true, noremap = true, desc = "Fuzzy commands"})
