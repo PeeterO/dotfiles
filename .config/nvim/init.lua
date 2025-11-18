@@ -76,7 +76,8 @@ map({ 'n' }, 'gr',  vim.lsp.buf.rename,                                  { norem
 --map({ 'n' }, 'gk',  vim.lsp.semantic_tokens.get_at_pos,                  { noremap = true, desc = "LSP semantic token"})
 map({ 'n' }, 'gj',  ":cnext<CR>",                                        { noremap = true, desc = "Quickfix next"})
 map({ 'n' }, 'gk',  ":cprev<CR>",                                        { noremap = true, desc = "Quickfix prev"})
-map({ 'n' }, '<leader>v',  vim.cmd.vsplit,                               { silent = true, noremap = true, desc = "Undo tree toggle"})
+map({ 'n' }, '<leader>v',  vim.cmd.vsplit,                               { silent = true, noremap = true, desc = "Vertical split"})
+map({ 'n' }, '<leader>V',  vim.cmd.vnew,                                 { silent = true, noremap = true, desc = "Vertical split empty tab"})
 
 map({ 'n', 'v' }, '<Leader>x', fzf.commands,                             { silent = true, noremap = true, desc = "Fuzzy neovim commands"})
 map({ 'n', 'v' }, '<Leader>z', fzf.builtin,                              { silent = true, noremap = true, desc = "Fuzzy commands"})

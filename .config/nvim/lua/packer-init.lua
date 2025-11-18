@@ -1,62 +1,46 @@
 return {
     {
-        'nvim-treesitter/nvim-treesitter',
-        dependencies = { { 'hiphish/rainbow-delimiters.nvim'},
-        { 'nvim-treesitter/nvim-treesitter-context',
-        config = function()
-            require'treesitter-context'.setup{
-                max_lines = 3,
-                mode = 'topline',
-                trim_scope = 'inner'
-            }
-        end,
-    } },
-    config = function()
-        require'nvim-treesitter.configs'.setup {
-            highlight = {
-                enable = true,
-                custom_captures = {
-                    -- Highlight the @foo.bar capture group with the "Identifier" highlight group.
-                    -- ["foo.bar"] = "Identifier",
-                },
-            },
-            incremental_selection = {
-                enable = true,
-                keymaps = {
-                    init_selection = "gnn",
-                    node_incremental = "grn",
-                    scope_incremental = "grc",
-                    node_decremental = "grm",
-                },
-            },
-            indent = {
-                enable = false --is buggy
-            },
-            require('rainbow-delimiters.setup').setup {
-                strategy = {
-                    [''] = 'rainbow-delimiters.strategy.global',
-                    vim = 'rainbow-delimiters.strategy.local',
-                },
-                query = {
-                    [''] = 'rainbow-delimiters',
-                    lua = 'rainbow-blocks',
-                },
-                priority = {
-                    [''] = 110,
-                    lua = 210,
+        {
+            "MeanderingProgrammer/treesitter-modules.nvim",
+            event = "VeryLazy",
+            dependencies = {
+                { "nvim-treesitter/nvim-treesitter", branch = 'main', lazy = false },
+                { 'hiphish/rainbow-delimiters.nvim'}},
+            ---@module 'treesitter-modules'
+            ---@type ts.mod.UserConfig
+            opts = {
+                auto_install = true,
+                ignore_install = {
+                    "gitcommit",
                 },
                 highlight = {
-                    'RainbowDelimiterRed',
-                    'RainbowDelimiterYellow',
-                    'RainbowDelimiterBlue',
-                    'RainbowDelimiterOrange',
-                    'RainbowDelimiterGreen',
-                    'RainbowDelimiterViolet',
-                    'RainbowDelimiterCyan',
+                    enable = true,
+                    disable = function(ctx)
+                        local bufsize = vim.api.nvim_buf_get_offset(ctx.buf, vim.api.nvim_buf_line_count(ctx.buf))
+                        if bufsize > 256 * 1024 then
+                            return true
+                        end
+                    end,
                 },
-            }
-        }
-    end
+                incremental_selection = {
+                    enable = true,
+                    keymaps = {
+                        init_selection = "<cr>",
+                        node_incremental = "<tab>",
+                        scope_incremental = "<cr>",
+                        node_decremental = "<s-tab>",
+                    },
+                },
+            },
+        },
+        {
+            "nvim-treesitter/nvim-treesitter-context",
+            event = "VeryLazy",
+            ---@type TSContext.UserConfig
+            opts = {
+                multiline_threshold = 3, -- Maximum number of lines to show for a single context
+            },
+        },
     },
 
     {
