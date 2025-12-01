@@ -1,3 +1,4 @@
+-- nvim.lazy self-host
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({
@@ -11,11 +12,6 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-plugins = require'packer-init'
-
-require "nvim-tree-on-attach"
-
-require("lazy").setup(plugins, opts)
 
 
 --settings
@@ -34,6 +30,7 @@ vim.o.mouse         = ''
 vim.o.termguicolors = true
 vim.o.clipboard     = "unnamed,unnamedplus"
 vim.o.ic            = true
+vim.o.shell         = '/bin/bash'
 vim.g.clipboard     = {
     name            = 'OSC 52',
     copy            = {
@@ -46,6 +43,12 @@ vim.g.clipboard     = {
     },
 }
 vim.cmd.colorscheme('retrobox')
+
+
+-- load plugins, done after settings because some things depend on these
+plugins = require'packer-init'
+require "nvim-tree-on-attach"
+require("lazy").setup(plugins, opts)
 
 --mappings
 local fzf = require('fzf-lua')
@@ -89,7 +92,7 @@ map({ 'n', 'v' }, '<C-n>',       '}',                                    { norem
 map({ 'n', 'v' }, '<C-m>',       '{',                                    { noremap = true, desc = "Jump down"})
 map({ 'n', 'v' }, '<space>',     '$',                                    { noremap = true, desc = "Easy end of line"})
 map({ 'n', 'v' }, '<backspace>', '^',                                    { noremap = true, desc = "Easy beginning of line"})
-map({ 'n', 'v' }, '<Tab>',       '%',                                    { noremap = true, desc = "Easy bracket jump"})
+map({ 'n' }, '<Tab>',       '%',                                         { noremap = true, desc = "Easy bracket jump"})
 map({ 'n' }, '<Leader>.',  "<cmd>ToggleTerm direction direction=tab<CR>",{ noremap = true, desc = "Toggle float term"})
 map({ 'v' }, '<Leader>.',  "<cmd>ToggleTermSendVisualLines<CR>",         { noremap = true, desc = "Toggle float term"})
 map({ 'v' }, 't',   ":VBox<CR>",                                         { noremap = true, desc = "Comment box"})

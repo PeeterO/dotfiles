@@ -5,7 +5,16 @@ return {
             event = "VeryLazy",
             dependencies = {
                 { "nvim-treesitter/nvim-treesitter", branch = 'main', lazy = false },
-                { 'hiphish/rainbow-delimiters.nvim'}},
+                { 'hiphish/rainbow-delimiters.nvim'},
+                {
+                    "nvim-treesitter/nvim-treesitter-context",
+                    event = "VeryLazy",
+                    ---@type TSContext.UserConfig
+                    opts = {
+                        multiline_threshold = 3, -- Maximum number of lines to show for a single context
+                    },
+                },
+            },
             ---@module 'treesitter-modules'
             ---@type ts.mod.UserConfig
             opts = {
@@ -25,20 +34,12 @@ return {
                 incremental_selection = {
                     enable = true,
                     keymaps = {
-                        init_selection = "<cr>",
+                        --init_selection = "<cr>",
                         node_incremental = "<tab>",
                         scope_incremental = "<cr>",
                         node_decremental = "<s-tab>",
                     },
                 },
-            },
-        },
-        {
-            "nvim-treesitter/nvim-treesitter-context",
-            event = "VeryLazy",
-            ---@type TSContext.UserConfig
-            opts = {
-                multiline_threshold = 3, -- Maximum number of lines to show for a single context
             },
         },
     },
@@ -159,8 +160,6 @@ return {
             }
         end,
     },
-
-    {'preservim/nerdcommenter'},
 
     {
         "L3MON4D3/LuaSnip",
