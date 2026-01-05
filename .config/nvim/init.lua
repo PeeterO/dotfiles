@@ -92,8 +92,8 @@ map({ 'n', 'v' }, '<C-n>',       '}',                                    { norem
 map({ 'n', 'v' }, '<C-m>',       '{',                                    { noremap = true, desc = "Jump down"})
 map({ 'n', 'v' }, '<space>',     '$',                                    { noremap = true, desc = "Easy end of line"})
 map({ 'n', 'v' }, '<backspace>', '^',                                    { noremap = true, desc = "Easy beginning of line"})
-map({ 'n' }, '<Tab>',       '%',                                         { noremap = true, desc = "Easy bracket jump"})
-map({ 'n' }, '<Leader>.',  "<cmd>ToggleTerm direction direction=tab<CR>",{ noremap = true, desc = "Toggle float term"})
+map({ 'n', 'v' }, '<Tab>',       '%',                                    { noremap = true, desc = "Easy bracket jump"})
+map({ 'n' }, '<Leader>.',  "<cmd>ToggleTerm direction=tab<CR>",          { noremap = true, desc = "Toggle float term"})
 map({ 'v' }, '<Leader>.',  "<cmd>ToggleTermSendVisualLines<CR>",         { noremap = true, desc = "Toggle float term"})
 map({ 'v' }, 't',   ":VBox<CR>",                                         { noremap = true, desc = "Comment box"})
 

@@ -4,7 +4,7 @@ return {
             "MeanderingProgrammer/treesitter-modules.nvim",
             event = "VeryLazy",
             dependencies = {
-                { "nvim-treesitter/nvim-treesitter", branch = 'main', lazy = false },
+                { "nvim-treesitter/nvim-treesitter", branch = 'main', lazy = false, build = ':TSUpdate' },
                 { 'hiphish/rainbow-delimiters.nvim'},
                 {
                     "nvim-treesitter/nvim-treesitter-context",
@@ -35,9 +35,9 @@ return {
                     enable = true,
                     keymaps = {
                         --init_selection = "<cr>",
-                        node_incremental = "<tab>",
-                        scope_incremental = "<cr>",
-                        node_decremental = "<s-tab>",
+                        node_incremental = "\\",
+                        -- scope_incremental = "<cr>",
+                        node_decremental = "|",
                     },
                 },
             },
