@@ -175,8 +175,6 @@ return {
         end
     },
 
-    {'jremmen/vim-ripgrep'},
-
     {
         'stevearc/quicker.nvim',
         config = function()
@@ -280,8 +278,6 @@ return {
     { 'akinsho/toggleterm.nvim', config = true },
 
     { 'jbyuki/nabla.nvim' },
-
-    { 'adelarsq/vim-matchit' },
 
     { 'mbbill/undotree' },
 

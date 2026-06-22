@@ -13,6 +13,8 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 
+vim.cmd('runtime macros/matchit.vim')
+
 --settings
 vim.g.mapleader     = ','
 vim.o.number        = true
