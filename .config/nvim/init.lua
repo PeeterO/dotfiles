@@ -13,7 +13,6 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 
-
 --settings
 vim.g.mapleader     = ','
 vim.o.number        = true
@@ -28,20 +27,20 @@ vim.o.expandtab     = true
 vim.o.shiftwidth    = 4
 vim.o.mouse         = ''
 vim.o.termguicolors = true
-vim.o.clipboard     = "unnamed,unnamedplus"
+vim.o.clipboard     = "unnamedplus"
 vim.o.ic            = true
 vim.o.shell         = '/bin/bash'
-vim.g.clipboard     = {
-    name            = 'OSC 52',
-    copy            = {
-        ['+']       = require('vim.ui.clipboard.osc52').copy('+'),
-        ['*']       = require('vim.ui.clipboard.osc52').copy('*'),
-    },
-    paste           = {
-        ['+']       = require('vim.ui.clipboard.osc52').paste('+'),
-        ['*']       = require('vim.ui.clipboard.osc52').paste('*'),
-    },
-}
+-- vim.g.clipboard     = {
+--     name            = 'OSC 52',
+--     copy            = {
+--         ['+']       = require('vim.ui.clipboard.osc52').copy('+'),
+--         ['*']       = require('vim.ui.clipboard.osc52').copy('*'),
+--     },
+--     paste           = {
+--         ['+']       = require('vim.ui.clipboard.osc52').paste('+'),
+--         ['*']       = require('vim.ui.clipboard.osc52').paste('*'),
+--     },
+-- }
 vim.cmd.colorscheme('retrobox')
 
 
@@ -112,14 +111,14 @@ map('n', '<M-6>',  "6gt",                                                { norem
 map('n', '<M-7>',  "7gt",                                                { noremap = true, desc = "Tab7"})
 map('n', '<M-8>',  "8gt",                                                { noremap = true, desc = "Tab8"})
 
-map('t', '<M-1>',  "<C-\\><C-n>gt",                                      { noremap = true, desc = "Tab1"})
-map('t', '<M-2>',  "<C-\\><C-n>gt",                                      { noremap = true, desc = "Tab2"})
-map('t', '<M-3>',  "<C-\\><C-n>gt",                                      { noremap = true, desc = "Tab3"})
-map('t', '<M-4>',  "<C-\\><C-n>gt",                                      { noremap = true, desc = "Tab4"})
-map('t', '<M-5>',  "<C-\\><C-n>gt",                                      { noremap = true, desc = "Tab5"})
-map('t', '<M-6>',  "<C-\\><C-n>gt",                                      { noremap = true, desc = "Tab6"})
-map('t', '<M-7>',  "<C-\\><C-n>gt",                                      { noremap = true, desc = "Tab7"})
-map('t', '<M-8>',  "<C-\\><C-n>gt",                                      { noremap = true, desc = "Tab8"})
+map('t', '<M-1>',  "<C-\\><C-n>1gt",                                     { noremap = true, desc = "Tab1"})
+map('t', '<M-2>',  "<C-\\><C-n>2gt",                                     { noremap = true, desc = "Tab2"})
+map('t', '<M-3>',  "<C-\\><C-n>3gt",                                     { noremap = true, desc = "Tab3"})
+map('t', '<M-4>',  "<C-\\><C-n>4gt",                                     { noremap = true, desc = "Tab4"})
+map('t', '<M-5>',  "<C-\\><C-n>5gt",                                     { noremap = true, desc = "Tab5"})
+map('t', '<M-6>',  "<C-\\><C-n>6gt",                                     { noremap = true, desc = "Tab6"})
+map('t', '<M-7>',  "<C-\\><C-n>7gt",                                     { noremap = true, desc = "Tab7"})
+map('t', '<M-8>',  "<C-\\><C-n>8gt",                                     { noremap = true, desc = "Tab8"})
 
 -- 
 fzf.config.defaults.actions.files["ctrl-q"] = require("trouble.sources.fzf").actions.open
