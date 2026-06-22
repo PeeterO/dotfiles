@@ -1,44 +1,42 @@
 return {
     {
-        {
-            "MeanderingProgrammer/treesitter-modules.nvim",
-            event = "VeryLazy",
-            dependencies = {
-                { "nvim-treesitter/nvim-treesitter", branch = 'main', lazy = false, build = ':TSUpdate' },
-                { 'hiphish/rainbow-delimiters.nvim'},
-                {
-                    "nvim-treesitter/nvim-treesitter-context",
-                    event = "VeryLazy",
-                    ---@type TSContext.UserConfig
-                    opts = {
-                        multiline_threshold = 3, -- Maximum number of lines to show for a single context
-                    },
+        "MeanderingProgrammer/treesitter-modules.nvim",
+        event = "VeryLazy",
+        dependencies = {
+            { "nvim-treesitter/nvim-treesitter", branch = 'main', lazy = false, build = ':TSUpdate' },
+            { 'hiphish/rainbow-delimiters.nvim'},
+            {
+                "nvim-treesitter/nvim-treesitter-context",
+                event = "VeryLazy",
+                ---@type TSContext.UserConfig
+                opts = {
+                    multiline_threshold = 3,
                 },
             },
-            ---@module 'treesitter-modules'
-            ---@type ts.mod.UserConfig
-            opts = {
-                auto_install = true,
-                ignore_install = {
-                    "gitcommit",
-                },
-                highlight = {
-                    enable = true,
-                    disable = function(ctx)
-                        local bufsize = vim.api.nvim_buf_get_offset(ctx.buf, vim.api.nvim_buf_line_count(ctx.buf))
-                        if bufsize > 256 * 1024 then
-                            return true
-                        end
-                    end,
-                },
-                incremental_selection = {
-                    enable = true,
-                    keymaps = {
-                        --init_selection = "<cr>",
-                        node_incremental = "\\",
-                        -- scope_incremental = "<cr>",
-                        node_decremental = "|",
-                    },
+        },
+        ---@module 'treesitter-modules'
+        ---@type ts.mod.UserConfig
+        opts = {
+            auto_install = true,
+            ignore_install = {
+                "gitcommit",
+            },
+            highlight = {
+                enable = true,
+                disable = function(ctx)
+                    local bufsize = vim.api.nvim_buf_get_offset(ctx.buf, vim.api.nvim_buf_line_count(ctx.buf))
+                    if bufsize > 256 * 1024 then
+                        return true
+                    end
+                end,
+            },
+            incremental_selection = {
+                enable = true,
+                keymaps = {
+                    --init_selection = "<cr>",
+                    node_incremental = "\\",
+                    -- scope_incremental = "<cr>",
+                    node_decremental = "|",
                 },
             },
         },
@@ -69,6 +67,7 @@ return {
             lsp.enable('clangd')
             lsp.enable('texlab')
             lsp.enable('robotframework_ls')
+            --lsp.enable('anls')
 
             local cmp = require'cmp'
             cmp.setup({
@@ -408,4 +407,27 @@ return {
             --},
         },
     },
+    {
+	    'Julian/lean.nvim',
+	    event = { 'BufReadPre *.lean', 'BufNewFile *.lean' },
+
+	    dependencies = {
+		    'nvim-lua/plenary.nvim',
+
+		    -- optional dependencies:
+
+		    -- a completion engine
+		    --    hrsh7th/nvim-cmp or Saghen/blink.cmp are popular choices
+
+		    -- 'nvim-telescope/telescope.nvim', -- for 2 Lean-specific pickers
+		    -- 'andymass/vim-matchup',          -- for enhanced % motion behavior
+		    -- 'andrewradev/switch.vim',        -- for switch support
+		    -- 'tomtom/tcomment_vim',           -- for commenting
+	    },
+
+	    ---@type lean.Config
+	    opts = { -- see below for full configuration options
+		    mappings = true,
+	    }
+    }
 }
