@@ -48,6 +48,21 @@ fi
 
 echo "Dotfiles installed."
 
+# Basic shell aliases
+add_alias() {
+    local file="$1" line="$2"
+    grep -qF "$line" "$file" 2>/dev/null || echo "$line" >> "$file"
+}
+
+BASHRC="$HOME/.bashrc"
+add_alias "$BASHRC" "alias ll='ls -lhF'"
+add_alias "$BASHRC" "alias la='ls -lAhF'"
+
+add_alias "$FISH_CONFIG" "alias ll='ls -lhF'"
+add_alias "$FISH_CONFIG" "alias la='ls -lAhF'"
+
+echo "Added ll and la aliases to bash and fish configs."
+
 # Install latest neovim from GitHub releases into ~/.local/bin
 echo "Installing latest neovim..."
 NVIM_URL="https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz"
