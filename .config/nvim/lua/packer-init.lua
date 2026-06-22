@@ -60,7 +60,7 @@ return {
         },
         config = function()
             local capabilities = require('cmp_nvim_lsp').default_capabilities()
-            lsp = vim.lsp
+            local lsp = vim.lsp
             lsp.config('*', {capabilities = capabilities})
             lsp.enable('rust_analyzer')
             lsp.enable('pyright')
@@ -116,7 +116,7 @@ return {
     {
         'ray-x/lsp_signature.nvim',
         config = function()
-            cfg = {
+            local cfg = {
                 always_trigger = true
             }
             require'lsp_signature'.setup(cfg)
@@ -125,7 +125,7 @@ return {
 
     {'ibhagwan/fzf-lua',
     config = function()
-        defaults = {
+        local defaults = {
             git_icons = false,
             file_icons = false,
         }

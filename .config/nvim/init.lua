@@ -45,7 +45,7 @@ vim.cmd.colorscheme('retrobox')
 
 
 -- load plugins, done after settings because some things depend on these
-plugins = require'packer-init'
+local plugins = require'packer-init'
 require "nvim-tree-on-attach"
 require("lazy").setup(plugins, opts)
 
