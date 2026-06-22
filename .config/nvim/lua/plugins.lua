@@ -125,10 +125,10 @@ return {
 
     {'ibhagwan/fzf-lua',
     config = function()
-        local defaults = {
+        require('fzf-lua').setup({
             git_icons = false,
             file_icons = false,
-        }
+        })
     end
     },
 
