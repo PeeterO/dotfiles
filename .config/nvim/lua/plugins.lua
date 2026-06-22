@@ -323,7 +323,27 @@ return {
             },
         }
         dap.configurations.c = dap.configurations.cpp
-        dap.configurations.rust = dap.configurations.cpp
+
+        dap.adapters.codelldb = {
+            type = 'server',
+            port = '${port}',
+            executable = {
+                command = vim.fn.stdpath('data') .. '/mason/bin/codelldb',
+                args = { '--port', '${port}' },
+            },
+        }
+        dap.configurations.rust = {
+            {
+                name = "Launch file",
+                type = "codelldb",
+                request = "launch",
+                program = function()
+                    return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+                end,
+                cwd = '${workspaceFolder}',
+                stopOnEntry = false,
+            },
+        }
 
         dap.listeners.before.attach.dapui_config = function()
             dapui.open()

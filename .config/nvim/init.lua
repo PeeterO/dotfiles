@@ -47,7 +47,7 @@ vim.cmd.colorscheme('retrobox')
 -- load plugins, done after settings because some things depend on these
 local plugins = require'plugins'
 require "nvim-tree-on-attach"
-require("lazy").setup(plugins, opts)
+require("lazy").setup(plugins)
 
 --mappings
 local fzf = require('fzf-lua')
@@ -96,9 +96,8 @@ map({ 'n' }, '<Leader>.',  "<cmd>ToggleTerm direction=tab<CR>",          { norem
 map({ 'v' }, '<Leader>.',  "<cmd>ToggleTermSendVisualLines<CR>",         { noremap = true, desc = "Toggle float term"})
 map({ 'v' }, 't',   ":VBox<CR>",                                         { noremap = true, desc = "Comment box"})
 
-map('n', 'q:',          ':q',                                            { noremap = true, desc = "Typo avoidance"})
+map('n', 'q:',          ':q<CR>',                                        { noremap = true, desc = "Typo avoidance"})
 map('n', '<Leader>~',   "<cmd>source $MYVIMRC<CR>",                      { noremap = true, desc = "Reload vim conf"})
-map('n', '<Leader>p',   "<cmd>set paste!<CR>",                           { noremap = true, desc = "Toggle paste mode"})
 map('n', '<Leader>q',   require("quicker").toggle,                       { noremap = true, desc = "Toggle quickfix"})
 map('t', '<Leader><Leader>',  "<C-\\><C-n>",                             { noremap = true, desc = "Exit terminal insert"})
 
