@@ -58,6 +58,7 @@ add_alias "$BASHRC" 'export PATH="$HOME/.local/bin:$PATH"'
 add_alias "$BASHRC" "alias ll='ls -lhF'"
 add_alias "$BASHRC" "alias la='ls -lAhF'"
 
+add_alias "$FISH_CONFIG" "fish_add_path \$HOME/.local/bin"
 add_alias "$FISH_CONFIG" "alias ll='ls -lhF'"
 add_alias "$FISH_CONFIG" "alias la='ls -lAhF'"
 
