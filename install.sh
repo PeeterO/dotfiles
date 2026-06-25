@@ -55,6 +55,7 @@ add_alias() {
 }
 
 BASHRC="$HOME/.bashrc"
+add_alias "$BASHRC" 'export PATH="$HOME/.local/bin:$PATH"'
 add_alias "$BASHRC" "alias ll='ls -lhF'"
 add_alias "$BASHRC" "alias la='ls -lAhF'"
 
@@ -71,10 +72,9 @@ echo "Installing latest neovim..."
     NVIM_TMP="$(mktemp -d)"
     trap 'rm -rf "$NVIM_TMP"' EXIT
     curl -fsSL "$NVIM_URL" | tar -xz -C "$NVIM_TMP" --strip-components=1
-    mkdir -p "$HOME/.local/bin"
-    cp "$NVIM_TMP/bin/nvim" "$HOME/.local/bin/nvim"
-    chmod +x "$HOME/.local/bin/nvim"
-    echo "Neovim $("$HOME/.local/bin/nvim" --version | head -1) installed to ~/.local/bin/nvim"
+    mkdir -p "$HOME/.local"
+    cp -a "$NVIM_TMP/." "$HOME/.local/"
+    echo "Neovim $("$HOME/.local/bin/nvim" --version | head -1) installed to ~/.local"
 ) || echo "Warning: neovim installation failed, continuing." >&2
 
 # Install fzf fuzzy finder via official install script (platform-independent)
