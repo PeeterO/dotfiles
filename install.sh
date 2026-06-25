@@ -117,17 +117,19 @@ fi
 
 # Install system dependencies
 echo "Installing system dependencies..."
+_sudo=''
+command -v sudo &>/dev/null && _sudo='sudo'
 if command -v apt-get &>/dev/null; then
-    sudo apt-get update -qq
-    sudo apt-get install -y ripgrep fd-find less git-delta
+    $_sudo apt-get update -qq
+    $_sudo apt-get install -y ripgrep fd-find less git-delta
     # Debian/Ubuntu installs fd as fdfind — symlink it
     if ! command -v fd &>/dev/null && command -v fdfind &>/dev/null; then
         ln -sf "$(command -v fdfind)" "$HOME/.local/bin/fd"
     fi
 elif command -v dnf &>/dev/null; then
-    sudo dnf install -y ripgrep fd-find less git-delta
+    $_sudo dnf install -y ripgrep fd-find less git-delta
 elif command -v pacman &>/dev/null; then
-    sudo pacman -S --noconfirm ripgrep fd less git-delta
+    $_sudo pacman -S --noconfirm ripgrep fd less git-delta
 else
     echo "Warning: no supported package manager found (apt/dnf/pacman). Install ripgrep, fd, less, and delta manually." >&2
 fi
