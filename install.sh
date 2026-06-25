@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-DOTFILES_REPO="git@github.com:PeeterO/dotfiles.git"
+DOTFILES_REPO="https://github.com/PeeterO/dotfiles.git"
 BARE_DIR="$HOME/.cfg"
 
 if [ -d "$BARE_DIR" ]; then
