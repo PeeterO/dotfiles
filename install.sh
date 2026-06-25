@@ -4,23 +4,22 @@ set -e
 DOTFILES_REPO="https://github.com/PeeterO/dotfiles.git"
 BARE_DIR="$HOME/.cfg"
 
-if [ -d "$BARE_DIR" ]; then
-    echo "Error: $BARE_DIR already exists. Aborting." >&2
-    exit 1
-fi
-
-git clone --bare "$DOTFILES_REPO" "$BARE_DIR"
-
 config() {
     git --git-dir="$BARE_DIR" --work-tree="$HOME" "$@"
 }
 
-config config --local core.sparseCheckout true
-cat > "$BARE_DIR/info/sparse-checkout" << 'EOF'
+if [ -d "$BARE_DIR" ]; then
+    echo "$BARE_DIR already exists, fetching latest..."
+    config fetch --all
+else
+    git clone --bare "$DOTFILES_REPO" "$BARE_DIR"
+    config config --local core.sparseCheckout true
+    cat > "$BARE_DIR/info/sparse-checkout" << 'EOF'
 /*
 !/install.sh
 !/README.md
 EOF
+fi
 
 config checkout 2>/dev/null || {
     echo "Backing up pre-existing dotfiles to ~/.cfg-backup"
