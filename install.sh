@@ -77,6 +77,44 @@ chmod +x "$HOME/.local/bin/nvim"
 
 echo "Neovim $("$HOME/.local/bin/nvim" --version | head -1) installed to ~/.local/bin/nvim"
 
+# Install fzf fuzzy finder via official install script (platform-independent)
+echo "Installing fzf..."
+if [ ! -d "$HOME/.fzf" ]; then
+    git clone --depth 1 https://github.com/junegunn/fzf.git "$HOME/.fzf"
+fi
+"$HOME/.fzf/install" --bin
+ln -sf "$HOME/.fzf/bin/fzf" "$HOME/.local/bin/fzf"
+echo "fzf $(fzf --version) installed to ~/.local/bin/fzf"
+
+# Install lazygit from GitHub releases (Linux and macOS, x86_64/arm64)
+echo "Installing lazygit..."
+_lg_os="$(uname -s)"
+_lg_arch="$(uname -m)"
+case "$_lg_os" in
+    Linux)  _lg_os="Linux" ;;
+    Darwin) _lg_os="Darwin" ;;
+    *)      _lg_os="" ;;
+esac
+case "$_lg_arch" in
+    x86_64)        _lg_arch="x86_64" ;;
+    aarch64|arm64) _lg_arch="arm64" ;;
+    armv6l)        _lg_arch="armv6" ;;
+    *)             _lg_arch="" ;;
+esac
+if [ -n "$_lg_os" ] && [ -n "$_lg_arch" ]; then
+    _lg_version="$(curl -fsSL "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" \
+        | grep '"tag_name"' | sed 's/.*"v\([^"]*\)".*/\1/')"
+    _lg_tmp="$(mktemp -d)"
+    curl -fsSL "https://github.com/jesseduffield/lazygit/releases/download/v${_lg_version}/lazygit_${_lg_version}_${_lg_os}_${_lg_arch}.tar.gz" \
+        | tar -xz -C "$_lg_tmp" lazygit
+    mv "$_lg_tmp/lazygit" "$HOME/.local/bin/lazygit"
+    chmod +x "$HOME/.local/bin/lazygit"
+    rm -rf "$_lg_tmp"
+    echo "lazygit $("$HOME/.local/bin/lazygit" --version 2>&1 | head -1) installed to ~/.local/bin/lazygit"
+else
+    echo "Warning: lazygit not available for ${_lg_os:-unknown}/${_lg_arch:-unknown}, skipping." >&2
+fi
+
 # Install system dependencies
 echo "Installing system dependencies..."
 if command -v apt-get &>/dev/null; then
