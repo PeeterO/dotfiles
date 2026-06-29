@@ -4,8 +4,8 @@ Personal dotfiles managed via a bare git repository (Atlassian method).
 
 ## Install
 
-```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/PeeterO/dotfiles/master/install.sh)
+```sh
+curl -fsSL https://raw.githubusercontent.com/PeeterO/dotfiles/master/install.sh | bash
 ```
 
 This will:
