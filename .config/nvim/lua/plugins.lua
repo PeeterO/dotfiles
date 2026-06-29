@@ -4,16 +4,6 @@ return {
         event = "VeryLazy",
         dependencies = {
             { "nvim-treesitter/nvim-treesitter", branch = 'main', lazy = false, build = ':TSUpdate' },
-            { 'hiphish/rainbow-delimiters.nvim',
-              init = function()
-                  vim.g.rainbow_delimiters = {
-                      condition = function(bufnr)
-                          local ft = vim.api.nvim_get_option_value('filetype', { buf = bufnr })
-                          return vim.treesitter.language.get_lang(ft) ~= nil
-                      end
-                  }
-              end
-            },
             {
                 "nvim-treesitter/nvim-treesitter-context",
                 event = "VeryLazy",
@@ -130,6 +120,25 @@ return {
             }
             require'lsp_signature'.setup(cfg)
         end
+    },
+
+    {
+        'hiphish/rainbow-delimiters.nvim',
+        event = 'BufReadPost',
+        config = function()
+            require('rainbow-delimiters.setup').setup({
+                condition = function(bufnr)
+                    local buftype = vim.api.nvim_get_option_value('buftype', { buf = bufnr })
+                    if buftype ~= '' and buftype ~= 'acwrite' then return false end
+                    return vim.treesitter.get_parser(bufnr, nil, { error = false }) ~= nil
+                end,
+            })
+            -- Bug in rainbow-delimiters: get_parser returns nil without throwing
+            -- in neovim 0.11+, but lib.attach only checks pcall success, not nil.
+            local lib = require('rainbow-delimiters.lib')
+            local orig = lib.attach
+            lib.attach = function(bufnr) pcall(orig, bufnr) end
+        end,
     },
 
     {'ibhagwan/fzf-lua',
