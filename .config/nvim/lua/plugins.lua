@@ -4,7 +4,16 @@ return {
         event = "VeryLazy",
         dependencies = {
             { "nvim-treesitter/nvim-treesitter", branch = 'main', lazy = false, build = ':TSUpdate' },
-            { 'hiphish/rainbow-delimiters.nvim'},
+            { 'hiphish/rainbow-delimiters.nvim',
+              init = function()
+                  vim.g.rainbow_delimiters = {
+                      condition = function(bufnr)
+                          local buftype = vim.api.nvim_get_option_value('buftype', { buf = bufnr })
+                          return buftype == '' or buftype == 'acwrite'
+                      end
+                  }
+              end
+            },
             {
                 "nvim-treesitter/nvim-treesitter-context",
                 event = "VeryLazy",
