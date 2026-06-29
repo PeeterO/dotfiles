@@ -8,8 +8,8 @@ return {
               init = function()
                   vim.g.rainbow_delimiters = {
                       condition = function(bufnr)
-                          local buftype = vim.api.nvim_get_option_value('buftype', { buf = bufnr })
-                          return buftype == '' or buftype == 'acwrite'
+                          local ft = vim.api.nvim_get_option_value('filetype', { buf = bufnr })
+                          return vim.treesitter.language.get_lang(ft) ~= nil
                       end
                   }
               end
