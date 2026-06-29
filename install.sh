@@ -33,18 +33,6 @@ config checkout 2>/dev/null || {
 
 config config --local status.showUntrackedFiles no
 
-FISH_CONFIG="$HOME/.config/fish/config.fish"
-ALIAS_LINE="alias config='git --git-dir=\$HOME/.cfg/ --work-tree=\$HOME'"
-
-if [ -f "$FISH_CONFIG" ] && grep -qF "alias config=" "$FISH_CONFIG"; then
-    echo "Fish alias already present in $FISH_CONFIG, skipping."
-else
-    mkdir -p "$(dirname "$FISH_CONFIG")"
-    echo "" >> "$FISH_CONFIG"
-    echo "$ALIAS_LINE" >> "$FISH_CONFIG"
-    echo "Added config alias to $FISH_CONFIG"
-fi
-
 echo "Dotfiles installed."
 
 # Basic shell aliases
@@ -54,15 +42,20 @@ add_alias() {
 }
 
 BASHRC="$HOME/.bashrc"
-add_alias "$BASHRC" 'export PATH="$HOME/.local/bin:$PATH"'
-add_alias "$BASHRC" "alias ll='ls -lhF'"
-add_alias "$BASHRC" "alias la='ls -lAhF'"
+FISH_CONFIG="$HOME/.config/fish/config.fish"
+mkdir -p "$(dirname "$FISH_CONFIG")"
 
+add_alias "$BASHRC"      "alias config='git --git-dir=\$HOME/.cfg/ --work-tree=\$HOME'"
+add_alias "$BASHRC"      'export PATH="$HOME/.local/bin:$PATH"'
+add_alias "$BASHRC"      "alias ll='ls -lhF'"
+add_alias "$BASHRC"      "alias la='ls -lAhF'"
+
+add_alias "$FISH_CONFIG" "alias config 'git --git-dir=\$HOME/.cfg/ --work-tree=\$HOME'"
 add_alias "$FISH_CONFIG" "fish_add_path \$HOME/.local/bin"
 add_alias "$FISH_CONFIG" "alias ll='ls -lhF'"
 add_alias "$FISH_CONFIG" "alias la='ls -lAhF'"
 
-echo "Added ll and la aliases to bash and fish configs."
+echo "Added config, ll, and la aliases to bash and fish configs."
 
 # Install latest neovim from GitHub releases into ~/.local/bin
 echo "Installing latest neovim..."
