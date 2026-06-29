@@ -121,12 +121,6 @@ map('t', '<M-6>',  "<C-\\><C-n>6gt",                                     { norem
 map('t', '<M-7>',  "<C-\\><C-n>7gt",                                     { noremap = true, desc = "Tab7"})
 map('t', '<M-8>',  "<C-\\><C-n>8gt",                                     { noremap = true, desc = "Tab8"})
 
-vim.api.nvim_create_autocmd('TermOpen', {
-    callback = function(ev)
-        pcall(require('rainbow-delimiters').disable, ev.buf)
-    end
-})
-
 --
 fzf.config.defaults.actions.files["ctrl-q"] = require("trouble.sources.fzf").actions.open
 
