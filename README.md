@@ -32,6 +32,7 @@ This will:
 - `fd` — file finder (fzf-lua)
 - `fzf` — fuzzy finder binary (fzf-lua backend)
 - `git-delta` — diff pager
+- `clang` — required by tree-sitter-cli's bindgen build step
 - `tree-sitter-cli` — tree-sitter grammar compilation
 
 ### LSP servers (install via Mason or manually)
