@@ -77,11 +77,12 @@ map({ 'n' }, '<Leader>e', vim.diagnostic.open_float,                     { silen
 map({ 'n' }, '<leader>u',  vim.cmd.UndotreeToggle,                       { silent = true, noremap = true, desc = "Undo tree toggle"})
 map({ 'n' }, 'gl',  function() lazygit:toggle() end,                     { noremap = true, desc = "Toggle Lazygit term"})
 map({ 'n' }, 'gr',  vim.lsp.buf.rename,                                  { noremap = true, desc = "LSP rename"})
---map({ 'n' }, 'gk',  vim.lsp.semantic_tokens.get_at_pos,                  { noremap = true, desc = "LSP semantic token"})
+--map({ 'n' }, 'gk',  vim.lsp.semantic_tokens.get_at_pos,                     { noremap = true, desc = "LSP semantic token"})
 map({ 'n' }, 'gj',  ":cnext<CR>",                                        { noremap = true, desc = "Quickfix next"})
 map({ 'n' }, 'gk',  ":cprev<CR>",                                        { noremap = true, desc = "Quickfix prev"})
 map({ 'n' }, '<leader>v',  vim.cmd.vsplit,                               { silent = true, noremap = true, desc = "Vertical split"})
 map({ 'n' }, '<leader>V',  vim.cmd.vnew,                                 { silent = true, noremap = true, desc = "Vertical split empty tab"})
+map({ 'n' }, 'gd', "<cmd>Trouble lsp_definitions toggle<cr>",            { silent = true, noremap = true, desc = "Goto Definition (Trouble)" })
 
 map({ 'n', 'v' }, '<Leader>x', fzf.commands,                             { silent = true, noremap = true, desc = "Fuzzy neovim commands"})
 map({ 'n', 'v' }, '<Leader>z', fzf.builtin,                              { silent = true, noremap = true, desc = "Fuzzy commands"})
