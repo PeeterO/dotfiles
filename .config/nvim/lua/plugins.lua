@@ -96,7 +96,7 @@ return {
                     ['<C-e>'] = cmp.mapping.abort(),
                     ["<C-j>"] = cmp.mapping(cmp.mapping.select_next_item(), {"i", "s"}),
                     ["<C-k>"] = cmp.mapping(cmp.mapping.select_prev_item(), {"i", "s"}),
-                    ["\'"] = cmp.mapping.confirm(
+                    ["`"] = cmp.mapping.confirm(
                     {
                         behavior = cmp.ConfirmBehavior.Replace,
                         select = true
