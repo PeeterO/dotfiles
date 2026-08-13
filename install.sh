@@ -84,7 +84,7 @@ echo "Installing fzf..."
     if [ ! -d "$HOME/.fzf" ]; then
         git clone --depth 1 https://github.com/junegunn/fzf.git "$HOME/.fzf"
     fi
-    "$HOME/.fzf/install" --bin
+    "$HOME/.fzf/install" --all
     ln -sf "$HOME/.fzf/bin/fzf" "$HOME/.local/bin/fzf"
     echo "fzf $("$HOME/.local/bin/fzf" --version) installed to ~/.local/bin/fzf"
 ) || echo "Warning: fzf installation failed, continuing." >&2
