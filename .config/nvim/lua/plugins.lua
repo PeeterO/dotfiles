@@ -146,6 +146,12 @@ return {
         require('fzf-lua').setup({
             git_icons = false,
             file_icons = false,
+            git = {
+                status = {
+                    -- override status to show only tracked files
+                    cmd = "git -c color.status=false --no-optional-locks status --porcelain=v1 --untracked-files=no",
+                },
+            },
         })
     end
     },
