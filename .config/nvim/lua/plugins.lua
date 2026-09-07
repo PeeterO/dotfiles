@@ -52,7 +52,6 @@ return {
             'hrsh7th/cmp-nvim-lua',
             'quangnguyen30192/cmp-nvim-tags',
             'hrsh7th/cmp-calc',
-            'uga-rosa/cmp-dictionary',
             'micangl/cmp-vimtex',
         },
         ---@module 'blink.cmp'
@@ -75,7 +74,7 @@ return {
                 default = {
                     'lsp', 'snippets', 'buffer', 'path',
                     'nvim_lua', 'tags', 'calc', 'vimtex',
-                    'dictionary',
+                    'projwords',
                 },
                 providers = {
                     -- async so slow compat sources never block the menu
@@ -83,12 +82,15 @@ return {
                     tags = { name = 'tags', module = 'blink.compat.source', async = true },
                     calc = { name = 'calc', module = 'blink.compat.source', async = true },
                     vimtex = { name = 'vimtex', module = 'blink.compat.source', async = true },
-                    dictionary = { name = 'dictionary', module = 'blink.compat.source', async = true, min_keyword_length = 4 },
+                    -- own source: project words scanned once into a cache
+                    -- file, see lua/projwords.lua
+                    projwords = { name = 'projwords', module = 'projwords', min_keyword_length = 4 },
                 },
             },
         },
         config = function(_, opts)
             require('blink.cmp').setup(opts)
+            require('projwords').setup()
 
             local lsp = vim.lsp
             lsp.config('*', {capabilities = require('blink.cmp').get_lsp_capabilities()})
