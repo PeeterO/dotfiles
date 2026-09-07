@@ -68,6 +68,11 @@ return {
                 -- only highlight while cycling with <C-j>/<C-k>; inserting the
                 -- preview on every selection triggers treesitter + LSP didChange
                 list = { selection = { preselect = true, auto_insert = false } },
+                -- keep the menu open when backspacing within a word
+                trigger = {
+                    show_on_backspace = true,
+                    show_on_backspace_in_keyword = true,
+                },
             },
             snippets = { preset = 'luasnip' },
             sources = {
