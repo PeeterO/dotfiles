@@ -42,73 +42,62 @@ return {
     },
 
     {
-        'hrsh7th/nvim-cmp',
+        'saghen/blink.cmp',
+        version = '1.*', -- pinned release ships a prebuilt fuzzy matcher binary
         dependencies = {
             'neovim/nvim-lspconfig',
-            'hrsh7th/cmp-buffer',
-            'hrsh7th/cmp-nvim-lsp',
+            'L3MON4D3/LuaSnip',
+            { 'saghen/blink.compat', version = '2.*', lazy = true, opts = {} },
+            -- nvim-cmp sources without a blink equivalent, used via blink.compat
             'hrsh7th/cmp-nvim-lua',
-            'hrsh7th/cmp-path',
             'quangnguyen30192/cmp-nvim-tags',
             'hrsh7th/cmp-calc',
-            'ray-x/cmp-treesitter',
             'uga-rosa/cmp-dictionary',
-            'lukas-reineke/cmp-rg',
-            'saadparwaiz1/cmp_luasnip',
             'micangl/cmp-vimtex',
         },
-        config = function()
-            local capabilities = require('cmp_nvim_lsp').default_capabilities()
+        ---@module 'blink.cmp'
+        ---@type blink.cmp.Config
+        opts = {
+            keymap = {
+                preset = 'none',
+                ['<C-e>'] = { 'hide', 'fallback' },
+                ['<C-j>'] = { 'select_next', 'fallback' },
+                ['<C-k>'] = { 'select_prev', 'fallback' },
+                ['`'] = { 'select_and_accept', 'fallback' },
+            },
+            completion = {
+                -- only highlight while cycling with <C-j>/<C-k>; inserting the
+                -- preview on every selection triggers treesitter + LSP didChange
+                list = { selection = { preselect = true, auto_insert = false } },
+            },
+            snippets = { preset = 'luasnip' },
+            sources = {
+                default = {
+                    'lsp', 'snippets', 'buffer', 'path',
+                    'nvim_lua', 'tags', 'calc', 'vimtex',
+                    'dictionary',
+                },
+                providers = {
+                    -- async so slow compat sources never block the menu
+                    nvim_lua = { name = 'nvim_lua', module = 'blink.compat.source', async = true },
+                    tags = { name = 'tags', module = 'blink.compat.source', async = true },
+                    calc = { name = 'calc', module = 'blink.compat.source', async = true },
+                    vimtex = { name = 'vimtex', module = 'blink.compat.source', async = true },
+                    dictionary = { name = 'dictionary', module = 'blink.compat.source', async = true, min_keyword_length = 4 },
+                },
+            },
+        },
+        config = function(_, opts)
+            require('blink.cmp').setup(opts)
+
             local lsp = vim.lsp
-            lsp.config('*', {capabilities = capabilities})
+            lsp.config('*', {capabilities = require('blink.cmp').get_lsp_capabilities()})
             lsp.enable('rust_analyzer')
             lsp.enable('pyright')
             lsp.enable('clangd')
             lsp.enable('texlab')
             lsp.enable('robotframework_ls')
             --lsp.enable('anls')
-
-            local cmp = require'cmp'
-            cmp.setup({
-                sources = cmp.config.sources({
-                    {name = "nvim_lsp"},
-                    {name = "buffer"},
-                    {name = "nvim_lua"},
-                    {name = "path"},
-                    {name = "tags"},
-                    {name = "calc"},
-                    {name = "treesitter"},
-                    {name = "vimtex"},
-                    {
-                        name = "luasnip",
-                        option = {show_autosnippets = true}
-                    },
-                    {
-                        name = "dictionary",
-                        keyword_length = 4
-                    },
-                    {
-                        name = "rg",
-                        keyword_length = 4
-                    },
-                }),
-                mapping = {
-                    ['<C-e>'] = cmp.mapping.abort(),
-                    ["<C-j>"] = cmp.mapping(cmp.mapping.select_next_item(), {"i", "s"}),
-                    ["<C-k>"] = cmp.mapping(cmp.mapping.select_prev_item(), {"i", "s"}),
-                    ["`"] = cmp.mapping.confirm(
-                    {
-                        behavior = cmp.ConfirmBehavior.Replace,
-                        select = true
-                    }),
-                },
-                snippet = {
-                    expand = function(args)
-                        require('luasnip').lsp_expand(args.body)
-                    end,
-                },
-            })
-
         end
     },
 
