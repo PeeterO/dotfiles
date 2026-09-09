@@ -85,7 +85,14 @@ return {
                     -- score_offset ranks lsp and snippets above the word-ish
                     -- sources (default: lsp 0, snippets -4, buffer -3)
                     lsp = { score_offset = 5 },
-                    snippets = { score_offset = 8 }, -- top level adds -3
+                    snippets = {
+                        score_offset = 8, -- top level adds -3
+                        -- keep snippets out of trigger-char menus (e.g. the
+                        -- file listing after accepting a directory)
+                        should_show_items = function(ctx)
+                            return ctx.trigger.initial_kind ~= 'trigger_character'
+                        end,
+                    },
                     -- async so slow compat sources never block the menu
                     nvim_lua = { name = 'nvim_lua', module = 'blink.compat.source', async = true },
                     tags = { name = 'tags', module = 'blink.compat.source', async = true, score_offset = -2 },
