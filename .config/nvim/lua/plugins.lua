@@ -82,14 +82,18 @@ return {
                     'projwords',
                 },
                 providers = {
+                    -- score_offset ranks lsp and snippets above the word-ish
+                    -- sources (default: lsp 0, snippets -4, buffer -3)
+                    lsp = { score_offset = 5 },
+                    snippets = { score_offset = 8 }, -- top level adds -3
                     -- async so slow compat sources never block the menu
                     nvim_lua = { name = 'nvim_lua', module = 'blink.compat.source', async = true },
-                    tags = { name = 'tags', module = 'blink.compat.source', async = true },
+                    tags = { name = 'tags', module = 'blink.compat.source', async = true, score_offset = -2 },
                     calc = { name = 'calc', module = 'blink.compat.source', async = true },
                     vimtex = { name = 'vimtex', module = 'blink.compat.source', async = true },
                     -- own source: project words scanned once into a cache
                     -- file, see lua/projwords.lua
-                    projwords = { name = 'projwords', module = 'projwords', min_keyword_length = 4 },
+                    projwords = { name = 'projwords', module = 'projwords', min_keyword_length = 4, score_offset = -3 },
                 },
             },
         },
