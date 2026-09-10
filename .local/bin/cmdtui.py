@@ -241,7 +241,11 @@ class MainScreen(Screen):
         Binding("e", "edit_command", "Edit"),
         Binding("d", "delete_item", "Delete"),
         Binding("x", "cancel_run", "Cancel run"),
-        Binding("q", "quit", "Quit"),
+        # Inside nvim (:terminal / toggleterm) q detaches: the hosting window
+        # closes while the app and any running command keep going, and
+        # re-toggling the terminal re-attaches. Q always really quits.
+        Binding("q", "quit", "Detach" if os.environ.get("NVIM") else "Quit"),
+        Binding("Q", "force_quit", "Quit"),
     ]
 
     # Keys the app itself uses. Derived from BINDINGS so it can never drift
@@ -615,6 +619,19 @@ class MainScreen(Screen):
             self.app.push_screen(ConfirmModal(msg), done)
 
     def action_quit(self) -> None:
+        nvim = os.environ.get("NVIM")
+        if nvim:
+            # Detach: close the nvim window hosting this terminal. The
+            # buffer (and this process) stays alive in the background.
+            import subprocess
+            subprocess.Popen(
+                ["nvim", "--server", nvim, "--remote-send", r"<C-\><C-n><cmd>close<cr>"],
+                stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+            )
+            return
+        self.app.exit()
+
+    def action_force_quit(self) -> None:
         self.app.exit()
 
 

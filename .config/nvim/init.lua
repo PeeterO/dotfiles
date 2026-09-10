@@ -55,6 +55,21 @@ require("lazy").setup(plugins)
 local fzf = require('fzf-lua')
 local map = vim.keymap.set 
 local lazygit = require('toggleterm.terminal').Terminal:new({ cmd = "lazygit", hidden = true, direction="float"})
+
+-- one cmdtui terminal per project (keyed by the dir holding .cmdtui.json);
+-- q in the app detaches, re-toggling re-attaches to the running instance
+local cmdtui_terms = {}
+local function cmdtui_toggle()
+    local buf = vim.api.nvim_buf_get_name(0)
+    local start = buf ~= '' and vim.fs.dirname(buf) or vim.fn.getcwd()
+    local root = vim.fs.root(start, '.cmdtui.json') or vim.fn.getcwd()
+    if not cmdtui_terms[root] then
+        cmdtui_terms[root] = require('toggleterm.terminal').Terminal:new({
+            cmd = "cmdtui.py", dir = root, hidden = true, direction = "float",
+        })
+    end
+    cmdtui_terms[root]:toggle()
+end
 local treetoggle = function() require('nvim-tree.api').tree.toggle({find_file = true}) end
 
 map({ "n" }, '<Leader>f', fzf.blines,                                    { silent = true, noremap = true, desc = "Fuzzy lines"})
@@ -76,6 +91,7 @@ map({ 'n' }, '<Leader>t', treetoggle,                                    { silen
 map({ 'n' }, '<Leader>e', vim.diagnostic.open_float,                     { silent = true, noremap = true, desc = "Show line error"})
 map({ 'n' }, '<leader>u',  vim.cmd.UndotreeToggle,                       { silent = true, noremap = true, desc = "Undo tree toggle"})
 map({ 'n' }, 'gl',  function() lazygit:toggle() end,                     { noremap = true, desc = "Toggle Lazygit term"})
+map({ 'n' }, '<Leader>m', cmdtui_toggle,                                 { silent = true, noremap = true, desc = "Toggle cmdtui"})
 map({ 'n' }, 'gr',  vim.lsp.buf.rename,                                  { noremap = true, desc = "LSP rename"})
 --map({ 'n' }, 'gk',  vim.lsp.semantic_tokens.get_at_pos,                     { noremap = true, desc = "LSP semantic token"})
 map({ 'n' }, 'gj',  ":cnext<CR>",                                        { noremap = true, desc = "Quickfix next"})
