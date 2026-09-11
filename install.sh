@@ -119,19 +119,31 @@ echo "Installing system dependencies..."
     command -v sudo &>/dev/null && _sudo='sudo'
     if command -v apt-get &>/dev/null; then
         $_sudo apt-get update -qq
-        $_sudo apt-get install -y ripgrep fd-find less git-delta clang
+        $_sudo apt-get install -y ripgrep fd-find less git-delta clang python3-pip
         # Debian/Ubuntu installs fd as fdfind — symlink it
         if ! command -v fd &>/dev/null && command -v fdfind &>/dev/null; then
             ln -sf "$(command -v fdfind)" "$HOME/.local/bin/fd"
         fi
     elif command -v dnf &>/dev/null; then
-        $_sudo dnf install -y ripgrep fd-find less git-delta clang
+        $_sudo dnf install -y ripgrep fd-find less git-delta clang python3-pip
     elif command -v pacman &>/dev/null; then
-        $_sudo pacman -S --noconfirm ripgrep fd less git-delta clang
+        $_sudo pacman -S --noconfirm ripgrep fd less git-delta clang python-pip
     else
         echo "Warning: no supported package manager found (apt/dnf/pacman). Install ripgrep, fd, less, delta, and clang manually." >&2
     fi
 ) || echo "Warning: system dependencies installation failed, continuing." >&2
+
+# Install textual (cmdtui.py dependency)
+echo "Installing textual..."
+(
+    set -e
+    # new pip needs --break-system-packages for user installs (PEP 668),
+    # old pip doesn't know the flag — try both
+    python3 -m pip install --user --break-system-packages textual 2>/dev/null \
+        || python3 -m pip install --user textual
+    python3 -c "import textual"
+    echo "textual installed."
+) || echo "Warning: textual installation failed, cmdtui.py will not work." >&2
 
 # In containers, make sure less exists and use it as git's pager
 in_container() {
