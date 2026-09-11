@@ -132,6 +132,35 @@ echo "Installing system dependencies..."
     fi
 ) || echo "Warning: system dependencies installation failed, continuing." >&2
 
+# In containers, make sure less exists and use it as git's pager
+in_container() {
+    [ -f /.dockerenv ] && return 0                 # docker
+    [ -f /run/.containerenv ] && return 0          # podman
+    [ -n "${container:-}" ] && return 0            # podman/systemd-nspawn set $container
+    grep -qsE '(docker|containerd|kubepods)' /proc/1/cgroup  # cgroup v1 fallback
+}
+if in_container; then
+    echo "Container environment detected, setting git pager to less..."
+    (
+        set -e
+        if ! command -v less &>/dev/null; then
+            _sudo=''
+            command -v sudo &>/dev/null && _sudo='sudo'
+            if command -v apt-get &>/dev/null; then
+                $_sudo apt-get update -qq
+                $_sudo apt-get install -y less
+            elif command -v dnf &>/dev/null; then
+                $_sudo dnf install -y less
+            elif command -v pacman &>/dev/null; then
+                $_sudo pacman -S --noconfirm less
+            fi
+        fi
+        command -v less &>/dev/null
+        git config --global core.pager "less -FRX"
+        echo "git pager set to less."
+    ) || echo "Warning: container pager setup failed, continuing." >&2
+fi
+
 # Install Rust via rustup
 echo "Installing Rust..."
 (
