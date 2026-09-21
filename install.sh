@@ -32,6 +32,7 @@ config checkout 2>/dev/null || {
 }
 
 config config --local status.showUntrackedFiles no
+git config --global status.showUntrackedFiles no
 
 echo "Dotfiles installed."
 
