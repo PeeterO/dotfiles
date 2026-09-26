@@ -133,18 +133,6 @@ echo "Installing system dependencies..."
     fi
 ) || echo "Warning: system dependencies installation failed, continuing." >&2
 
-# Install textual (cmdtui.py dependency)
-echo "Installing textual..."
-(
-    set -e
-    # new pip needs --break-system-packages for user installs (PEP 668),
-    # old pip doesn't know the flag — try both
-    python3 -m pip install --user --break-system-packages textual 2>/dev/null \
-        || python3 -m pip install --user textual
-    python3 -c "import textual"
-    echo "textual installed."
-) || echo "Warning: textual installation failed, cmdtui.py will not work." >&2
-
 # In containers, make sure less exists and use it as git's pager
 in_container() {
     [ -f /.dockerenv ] && return 0                 # docker
@@ -173,6 +161,27 @@ if in_container; then
         echo "git pager set to less."
     ) || echo "Warning: container pager setup failed, continuing." >&2
 fi
+
+# Install textual (cmdtui.py dependency)
+echo "Installing textual..."
+(
+    set -e
+    if in_container; then
+        # PEP 668's externally-managed rejection is meaningless in a
+        # throwaway container: the env var makes modern pip ignore it
+        # and old pip ignores the unknown var
+        export PIP_BREAK_SYSTEM_PACKAGES=1
+        python3 -m pip install textual 2>/dev/null \
+            || python3 -m pip install --user textual
+    else
+        # new pip needs --break-system-packages for user installs (PEP 668),
+        # old pip doesn't know the flag — try both
+        python3 -m pip install --user --break-system-packages textual 2>/dev/null \
+            || python3 -m pip install --user textual
+    fi
+    python3 -c "import textual"
+    echo "textual installed."
+) || echo "Warning: textual installation failed, cmdtui.py will not work." >&2
 
 # Install Rust via rustup
 echo "Installing Rust..."
