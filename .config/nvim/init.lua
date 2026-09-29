@@ -33,18 +33,22 @@ vim.o.clipboard     = "unnamedplus"
 vim.o.ic            = true
 vim.o.shell         = '/bin/bash'
 vim.g.clipboard = {
-  name = 'OSC 52',
+  name = "OSC 52 (copy-only)",
   copy = {
-    ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
-    ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
+    ["+"] = require("vim.ui.clipboard.osc52").copy("+"),
+    ["*"] = require("vim.ui.clipboard.osc52").copy("*"),
   },
   paste = {
-    ['+'] = require('vim.ui.clipboard.osc52').paste('+'),
-    ['*'] = require('vim.ui.clipboard.osc52').paste('*'),
+    ["+"] = function()
+      return { vim.fn.split(vim.fn.getreg('"'), "\n"), vim.fn.getregtype('"') }
+    end,
+    ["*"] = function()
+      return { vim.fn.split(vim.fn.getreg('"'), "\n"), vim.fn.getregtype('"') }
+    end,
   },
 }
-vim.cmd.colorscheme('retrobox')
 
+vim.cmd.colorscheme('retrobox')
 
 -- load plugins, done after settings because some things depend on these
 local plugins = require'plugins'
@@ -83,8 +87,8 @@ map({ 'n' }, '<Leader>l', fzf.lsp_workspace_diagnostics,                 { silen
 map({ 'n' }, '<Leader>b', fzf.buffers,                                   { silent = true, noremap = true, desc = "Fuzzy buffers"})
 map({ 'n' }, '<Leader>c', fzf.changes,                                   { noremap = true, desc = "Fzf git changes"})
 map({ 'n' }, 'gs',        fzf.lsp_document_symbols,                      { silent = true, noremap = true, desc = "Lsp symbols"})
+map({ 'n' }, 'gm',        fzf.oldfiles,                                  { silent = true, noremap = true, desc = "Previous files"})
 map({ 'n' }, '<Leader>y', require('neoclip.fzf'),                        { silent = true, noremap = true, desc = "Fuzzy yank history"})
-map({ 'n' }, 'gm',        require('memento').toggle,                     { silent = true, noremap = true, desc = "Previous files"})
 map({ 'i', 's' }, '<C-n>', function() require('luasnip').jump(1) end,    { silent = true, noremap = true, desc = "Snippet advance"})
 map({ 'i', 's' }, '<C-p>', function() require('luasnip').jump(-1) end,   { silent = true, noremap = true, desc = "Snippet back"})
 map({ 'n' }, '<Leader>t', treetoggle,                                    { silent = true, noremap = true, desc = "File tree toggle"})

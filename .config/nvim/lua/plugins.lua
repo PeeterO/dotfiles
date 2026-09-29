@@ -112,9 +112,16 @@ return {
             lsp.config('*', {capabilities = require('blink.cmp').get_lsp_capabilities()})
             lsp.enable('rust_analyzer')
             lsp.enable('pyright')
-            lsp.enable('clangd')
             lsp.enable('texlab')
             lsp.enable('robotframework_ls')
+
+            vim.lsp.config('clangd', {
+                cmd = {
+                    "clangd",
+                    "--query-driver=/opt/unic/0.2+snapshot/sysroots/x86_64-unicngsdk-linux/usr/bin/powerpc-unicng-linux/*",
+                },
+            })
+            lsp.enable('clangd')
             --lsp.enable('anls')
         end
     },
@@ -288,13 +295,6 @@ return {
         config = function()
             require('nvim-peekup.config').on_keystroke["delay"] = ''
         end
-    },
-
-    {
-        'gaborvecsei/memento.nvim',
-        dependencies = {
-            'nvim-lua/plenary.nvim'
-        },
     },
 
     {
