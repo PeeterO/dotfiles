@@ -48,8 +48,6 @@ vim.g.clipboard = {
   },
 }
 
-vim.cmd.colorscheme('retrobox')
-
 -- load plugins, done after settings because some things depend on these
 local plugins = require'plugins'
 require "nvim-tree-on-attach"

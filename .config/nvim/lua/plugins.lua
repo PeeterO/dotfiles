@@ -476,5 +476,11 @@ return {
 	    opts = { -- see below for full configuration options
 		    mappings = true,
 	    }
+    },
+    {
+        "luisiacc/gruvbox-baby",
+        config = function()
+            vim.cmd.colorscheme('gruvbox-baby')
+        end
     }
 }
