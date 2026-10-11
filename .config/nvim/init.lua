@@ -32,6 +32,15 @@ vim.o.termguicolors = true
 vim.o.clipboard     = "unnamedplus"
 vim.o.ic            = true
 vim.o.shell         = '/bin/bash'
+vim.o.scrolloff     = 2
+vim.o.cursorline    = true
+vim.o.ignorecase    = true
+vim.o.smartcase     = true
+vim.o.lazyredraw    = true
+vim.o.redrawtime    = 1000
+vim.opt.swapfile    = false
+vim.opt.undofile    = true
+
 vim.g.clipboard = {
   name = "OSC 52 (copy-only)",
   copy = {
