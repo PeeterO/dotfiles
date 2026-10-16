@@ -89,7 +89,7 @@ map({ 'n' }, '<Leader>g', fzf.files,                                     { silen
 map({ 'n' }, '<Leader>s', fzf.git_status,                                { silent = true, noremap = true, desc = "Fuzzy git status"})
 map({ 'n' }, '<Leader>r', fzf.grep,                                      { silent = true, noremap = true, desc = "Fuzzy ripgrep"})
 map({ 'v' }, '<Leader>r', fzf.grep_visual,                               { silent = true, noremap = true, desc = "Fuzzy visual selection ripgrep"})
-map({ 'n' }, '<Leader>h', fzf.git_bcommits,                              { silent = true, noremap = true, desc = "File history"})
+map({ 'n' }, '<Leader>hl',fzf.git_bcommits,                              { silent = true, noremap = true, desc = "File history"})
 map({ 'n' }, '<Leader>l', fzf.lsp_workspace_diagnostics,                 { silent = true, noremap = true, desc = "Lsp diagnostics"})
 map({ 'n' }, '<Leader>b', fzf.buffers,                                   { silent = true, noremap = true, desc = "Fuzzy buffers"})
 map({ 'n' }, '<Leader>c', fzf.changes,                                   { noremap = true, desc = "Fzf git changes"})

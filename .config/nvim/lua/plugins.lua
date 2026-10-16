@@ -482,5 +482,33 @@ return {
         config = function()
             vim.cmd.colorscheme('gruvbox-baby')
         end
+    },
+    {
+        "lewis6991/gitsigns.nvim",
+        config = function()
+
+            require('gitsigns').setup()
+
+            local function toggle_diff_ref()
+                if vim.wo.diff then
+                    -- close the gitsigns reference window(s), then leave diff mode
+                    for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+                        local name = vim.api.nvim_buf_get_name(vim.api.nvim_win_get_buf(win))
+                        if name:match("^gitsigns://") then
+                            vim.api.nvim_win_close(win, true)
+                        end
+                    end
+                    vim.cmd("diffoff!")
+                    vim.wo.foldenable = true -- undo the nofoldenable from opening
+                else
+                    require("gitsigns").diffthis("HEAD", { vertical = true, split = "belowright" })
+                    vim.cmd("windo set nofoldenable")
+                    vim.cmd("wincmd t") -- back to your editable file on the left
+                end
+            end
+
+            vim.keymap.set("n", "<leader>hd", toggle_diff_ref, { desc = "Toggle HEAD reference split" })
+
+        end
     }
 }
