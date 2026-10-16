@@ -155,20 +155,51 @@ return {
         end,
     },
 
-    {'ibhagwan/fzf-lua',
-    config = function()
-        require('fzf-lua').setup({
-            git_icons = false,
-            file_icons = false,
-            git = {
-                status = {
-                    -- override status to show only tracked files
-                    cmd = "git -c color.status=false --no-optional-locks status --porcelain=v1 --untracked-files=no",
-                },
-            },
-        })
-    end
-    },
+    {
+        'ibhagwan/fzf-lua',
+        config = function()
+
+            -- open the commit's version of the current file as a synced reference split
+            local function diff_against_commit(selected)
+                if not selected or not selected[1] then return end
+                local hash = selected[1]:match("[^ ]+") -- first token is the commit hash
+
+                -- replace an existing reference split instead of stacking another
+                if vim.wo.diff then
+                    for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+                        local name = vim.api.nvim_buf_get_name(vim.api.nvim_win_get_buf(win))
+                        if name:match("^gitsigns://") then
+                            vim.api.nvim_win_close(win, true)
+                        end
+                    end
+                    vim.cmd("diffoff!")
+                end
+
+                require("gitsigns").diffthis(hash, { vertical = true, split = "belowright" })
+                vim.cmd("windo set nofoldenable")
+                vim.cmd("wincmd t") -- back to your editable file on the left
+            end
+
+
+
+                require('fzf-lua').setup({
+                    git_icons = false,
+                    file_icons = false,
+                    git = {
+                        status = {
+                            -- override status to show only tracked files
+                            cmd = "git -c color.status=false --no-optional-locks status --porcelain=v1 --untracked-files=no",
+                        },
+                        bcommits = {
+                            actions = {
+                                ["ctrl-d"] = diff_against_commit
+                            }
+                        }
+                    },
+                })
+
+            end
+        },
 
     {'cohama/lexima.vim'},
 
@@ -489,6 +520,29 @@ return {
 
             require('gitsigns').setup()
 
+            local function unfold_diff_windows()
+                local group = vim.api.nvim_create_augroup("DiffRefNoFold", { clear = true })
+                vim.api.nvim_create_autocmd("OptionSet", {
+                    group = group,
+                    pattern = "diff",
+                    callback = function()
+                        vim.schedule(function()
+                            local n = 0
+                            for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+                                if vim.wo[win].diff then
+                                    vim.wo[win].foldenable = false
+                                    n = n + 1
+                                end
+                            end
+                            -- both sides are in diff mode now, so we're done
+                            if n >= 2 then
+                                vim.api.nvim_clear_autocmds({ group = group })
+                            end
+                        end)
+                    end,
+                })
+            end
+
             local function toggle_diff_ref()
                 if vim.wo.diff then
                     -- close the gitsigns reference window(s), then leave diff mode
@@ -499,10 +553,9 @@ return {
                         end
                     end
                     vim.cmd("diffoff!")
-                    vim.wo.foldenable = true -- undo the nofoldenable from opening
                 else
+                    unfold_diff_windows()
                     require("gitsigns").diffthis("HEAD", { vertical = true, split = "belowright" })
-                    vim.cmd("windo set nofoldenable")
                     vim.cmd("wincmd t") -- back to your editable file on the left
                 end
             end
