@@ -329,10 +329,19 @@ return {
     },
 
     {
-		'mgnsk/autotabline.nvim',
-		config = function()
-			require("autotabline").setup()
-		end,
+        'romgrk/barbar.nvim',
+
+        dependencies = {
+            'lewis6991/gitsigns.nvim', -- OPTIONAL: for git status
+            'nvim-tree/nvim-web-devicons', -- OPTIONAL: for file icons
+        },
+        init = function() vim.g.barbar_auto_setup = false end,
+        opts = {
+            -- lazy.nvim will automatically call setup for you. put your options here, anything missing will use the default:
+            -- animation = true,
+            -- insert_at_start = true,
+            -- …etc.
+        },
     },
 
     { 'LudoPinelli/comment-box.nvim' },
@@ -518,7 +527,9 @@ return {
         "lewis6991/gitsigns.nvim",
         config = function()
 
-            require('gitsigns').setup()
+            require('gitsigns').setup{
+                current_line_blame = true,
+            }
 
             local function unfold_diff_windows()
                 local group = vim.api.nvim_create_augroup("DiffRefNoFold", { clear = true })
@@ -560,7 +571,18 @@ return {
                 end
             end
 
+            local function toggle_cached_diff()
+                if vim.wo.diff then
+                    toggle_diff_ref()
+                else
+                    unfold_diff_windows()
+                    require("gitsigns").diffthis(nil, { vertical = true, split = "belowright" })
+                    vim.cmd("wincmd t")
+                end
+            end
+
             vim.keymap.set("n", "<leader>hd", toggle_diff_ref, { desc = "Toggle HEAD reference split" })
+            vim.keymap.set("n", "<leader>hD", toggle_cached_diff, { desc = "Toggle STAGED reference split" })
 
         end
     }
