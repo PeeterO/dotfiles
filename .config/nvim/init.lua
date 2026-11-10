@@ -127,7 +127,26 @@ map({ 'n' }, '<Leader>.',  "<cmd>ToggleTerm direction=tab<CR>",          { norem
 map({ 'v' }, '<Leader>.',  "<cmd>ToggleTermSendVisualLines<CR>",         { noremap = true, desc = "Toggle float term"})
 map({ 'v' }, 't',   ":VBox<CR>",                                         { noremap = true, desc = "Comment box"})
 
-map('n', 'q:',          ':q<CR>',                                        { noremap = true, desc = "Typo avoidance"})
+-- barbar draws buffers as tabs, so plain :q (which closes the window) never
+-- removes the "tab" you see. Close the buffer instead when it is the only
+-- normal window and other buffers remain; otherwise behave like :q.
+-- The abbreviation fires as soon as a non-letter is typed, so ":q!" arrives
+-- here as ":BufQuit!" and must stay a plain forced quit.
+vim.api.nvim_create_user_command('BufQuit', function(opts)
+    local only_window = #vim.tbl_filter(function(w)
+        return vim.api.nvim_win_get_config(w).relative == ''
+    end, vim.api.nvim_tabpage_list_wins(0)) == 1
+    local other_buffers = #vim.fn.getbufinfo({ buflisted = 1 }) > 1
+    if not opts.bang and vim.fn.exists(':BufferClose') == 2 and only_window
+        and other_buffers and vim.bo.buflisted and vim.bo.buftype == '' then
+        vim.cmd('BufferClose')
+    else
+        vim.cmd(opts.bang and 'quit!' or 'quit')
+    end
+end, { bang = true })
+vim.cmd([[cnoreabbrev <expr> q (getcmdtype() ==# ':' && getcmdline() ==# 'q') ? 'BufQuit' : 'q']])
+
+map('n', 'q:',          ':BufQuit<CR>',                                  { noremap = true, desc = "Typo avoidance"})
 map('n', '<Leader>~',   "<cmd>source $MYVIMRC<CR>",                      { noremap = true, desc = "Reload vim conf"})
 map('n', '<Leader>q',   require("quicker").toggle,                       { noremap = true, desc = "Toggle quickfix"})
 map('t', '<Leader><Leader>',  "<C-\\><C-n>",                             { noremap = true, desc = "Exit terminal insert"})
