@@ -223,10 +223,18 @@ return {
             require('lualine').setup {
                 options = {
                     icons_enabled = false,
+                    theme = 'gruvbox-baby',
                 },
-                globalstatus = true
+                globalstatus = true,
             }
         end,
+    },
+
+    {
+        -- local replacement for crispgm/nvim-tabline that hides toggleterm tabs
+        name = 'mytabline',
+        dir = vim.fn.stdpath('config'),
+        config = function() require('mytabline').setup() end,
     },
 
     {
@@ -326,22 +334,6 @@ return {
         config = function()
             require('nvim-peekup.config').on_keystroke["delay"] = ''
         end
-    },
-
-    {
-        'romgrk/barbar.nvim',
-
-        dependencies = {
-            'lewis6991/gitsigns.nvim', -- OPTIONAL: for git status
-            'nvim-tree/nvim-web-devicons', -- OPTIONAL: for file icons
-        },
-        init = function() vim.g.barbar_auto_setup = false end,
-        opts = {
-            -- lazy.nvim will automatically call setup for you. put your options here, anything missing will use the default:
-            -- animation = true,
-            -- insert_at_start = true,
-            -- …etc.
-        },
     },
 
     { 'LudoPinelli/comment-box.nvim' },

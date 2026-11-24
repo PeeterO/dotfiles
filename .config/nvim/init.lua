@@ -123,51 +123,48 @@ map({ 'n', 'v' }, '<C-m>',       '{',                                    { norem
 map({ 'n', 'v' }, '<space>',     '$',                                    { noremap = true, desc = "Easy end of line"})
 map({ 'n', 'v' }, '<backspace>', '^',                                    { noremap = true, desc = "Easy beginning of line"})
 map({ 'n', 'v' }, '<Tab>',       '%',                                    { noremap = true, desc = "Easy bracket jump"})
-map({ 'n' }, '<Leader>.',  "<cmd>ToggleTerm direction=tab<CR>",          { noremap = true, desc = "Toggle float term"})
+-- ToggleTerm's own toggle closes a terminal that is open in another tab; jump
+-- to that tab instead. Inside the terminal tab, toggle as usual (close it).
+local function toggle_tab_term()
+    if vim.bo.filetype ~= 'toggleterm' then
+        for _, tab in ipairs(vim.api.nvim_list_tabpages()) do
+            for _, win in ipairs(vim.api.nvim_tabpage_list_wins(tab)) do
+                if vim.bo[vim.api.nvim_win_get_buf(win)].filetype == 'toggleterm' then
+                    vim.api.nvim_set_current_tabpage(tab)
+                    vim.cmd('startinsert')
+                    return
+                end
+            end
+        end
+    end
+    vim.cmd('ToggleTerm direction=tab')
+end
+map({ 'n' }, '<Leader>.',  toggle_tab_term,                              { noremap = true, desc = "Toggle tab term"})
 map({ 'v' }, '<Leader>.',  "<cmd>ToggleTermSendVisualLines<CR>",         { noremap = true, desc = "Toggle float term"})
 map({ 'v' }, 't',   ":VBox<CR>",                                         { noremap = true, desc = "Comment box"})
 
--- barbar draws buffers as tabs, so plain :q (which closes the window) never
--- removes the "tab" you see. Close the buffer instead when it is the only
--- normal window and other buffers remain; otherwise behave like :q.
--- The abbreviation fires as soon as a non-letter is typed, so ":q!" arrives
--- here as ":BufQuit!" and must stay a plain forced quit.
-vim.api.nvim_create_user_command('BufQuit', function(opts)
-    local only_window = #vim.tbl_filter(function(w)
-        return vim.api.nvim_win_get_config(w).relative == ''
-    end, vim.api.nvim_tabpage_list_wins(0)) == 1
-    local other_buffers = #vim.fn.getbufinfo({ buflisted = 1 }) > 1
-    if not opts.bang and vim.fn.exists(':BufferClose') == 2 and only_window
-        and other_buffers and vim.bo.buflisted and vim.bo.buftype == '' then
-        vim.cmd('BufferClose')
-    else
-        vim.cmd(opts.bang and 'quit!' or 'quit')
-    end
-end, { bang = true })
-vim.cmd([[cnoreabbrev <expr> q (getcmdtype() ==# ':' && getcmdline() ==# 'q') ? 'BufQuit' : 'q']])
-
-map('n', 'q:',          ':BufQuit<CR>',                                  { noremap = true, desc = "Typo avoidance"})
+map('n', 'q:',          ':q<CR>',                                        { noremap = true, desc = "Typo avoidance"})
 map('n', '<Leader>~',   "<cmd>source $MYVIMRC<CR>",                      { noremap = true, desc = "Reload vim conf"})
 map('n', '<Leader>q',   require("quicker").toggle,                       { noremap = true, desc = "Toggle quickfix"})
 map('t', '<Leader><Leader>',  "<C-\\><C-n>",                             { noremap = true, desc = "Exit terminal insert"})
 
-map('n', '<M-1>',  "<Cmd>BufferGoto 1<CR>",                                                { noremap = true, desc = "Tab1"})
-map('n', '<M-2>',  "<Cmd>BufferGoto 2<CR>",                                                { noremap = true, desc = "Tab2"})
-map('n', '<M-3>',  "<Cmd>BufferGoto 3<CR>",                                                { noremap = true, desc = "Tab3"})
-map('n', '<M-4>',  "<Cmd>BufferGoto 4<CR>",                                                { noremap = true, desc = "Tab4"})
-map('n', '<M-5>',  "<Cmd>BufferGoto 5<CR>",                                                { noremap = true, desc = "Tab5"})
-map('n', '<M-6>',  "<Cmd>BufferGoto 6<CR>",                                                { noremap = true, desc = "Tab6"})
-map('n', '<M-7>',  "<Cmd>BufferGoto 7<CR>",                                                { noremap = true, desc = "Tab7"})
-map('n', '<M-8>',  "<Cmd>BufferGoto 8<CR>",                                                { noremap = true, desc = "Tab8"})
+map('n', '<M-1>',  "1gt",                                                { noremap = true, desc = "Tab1"})
+map('n', '<M-2>',  "2gt",                                                { noremap = true, desc = "Tab2"})
+map('n', '<M-3>',  "3gt",                                                { noremap = true, desc = "Tab3"})
+map('n', '<M-4>',  "4gt",                                                { noremap = true, desc = "Tab4"})
+map('n', '<M-5>',  "5gt",                                                { noremap = true, desc = "Tab5"})
+map('n', '<M-6>',  "6gt",                                                { noremap = true, desc = "Tab6"})
+map('n', '<M-7>',  "7gt",                                                { noremap = true, desc = "Tab7"})
+map('n', '<M-8>',  "8gt",                                                { noremap = true, desc = "Tab8"})
 
-map('t', '<M-1>',  "<C-\\><C-n><Cmd>BufferGoto 1<CR>",                                     { noremap = true, desc = "Tab1"})
-map('t', '<M-2>',  "<C-\\><C-n><Cmd>BufferGoto 2<CR>",                                     { noremap = true, desc = "Tab2"})
-map('t', '<M-3>',  "<C-\\><C-n><Cmd>BufferGoto 3<CR>",                                     { noremap = true, desc = "Tab3"})
-map('t', '<M-4>',  "<C-\\><C-n><Cmd>BufferGoto 4<CR>",                                     { noremap = true, desc = "Tab4"})
-map('t', '<M-5>',  "<C-\\><C-n><Cmd>BufferGoto 5<CR>",                                     { noremap = true, desc = "Tab5"})
-map('t', '<M-6>',  "<C-\\><C-n><Cmd>BufferGoto 6<CR>",                                     { noremap = true, desc = "Tab6"})
-map('t', '<M-7>',  "<C-\\><C-n><Cmd>BufferGoto 7<CR>",                                     { noremap = true, desc = "Tab7"})
-map('t', '<M-8>',  "<C-\\><C-n><Cmd>BufferGoto 8<CR>",                                     { noremap = true, desc = "Tab8"})
+map('t', '<M-1>',  "<C-\\><C-n>1gt",                                     { noremap = true, desc = "Tab1"})
+map('t', '<M-2>',  "<C-\\><C-n>2gt",                                     { noremap = true, desc = "Tab2"})
+map('t', '<M-3>',  "<C-\\><C-n>3gt",                                     { noremap = true, desc = "Tab3"})
+map('t', '<M-4>',  "<C-\\><C-n>4gt",                                     { noremap = true, desc = "Tab4"})
+map('t', '<M-5>',  "<C-\\><C-n>5gt",                                     { noremap = true, desc = "Tab5"})
+map('t', '<M-6>',  "<C-\\><C-n>6gt",                                     { noremap = true, desc = "Tab6"})
+map('t', '<M-7>',  "<C-\\><C-n>7gt",                                     { noremap = true, desc = "Tab7"})
+map('t', '<M-8>',  "<C-\\><C-n>8gt",                                     { noremap = true, desc = "Tab8"})
 
 --
 fzf.config.defaults.actions.files["ctrl-q"] = require("trouble.sources.fzf").actions.open
